@@ -1,26 +1,140 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink: #12181d;
+  --ink-raised: #1a2228;
+  --ink-raised-2: #212b32;
+  --paper: #ede9e0;
+  --muted: #93a0a4;
+  --slate: #5c7a82;
+  --slate-bright: #86adb5;
+  --ember: #c1622e;
+  --ember-bright: #e08248;
+  --line: #2a3338;
+  --line-bright: #3a454c;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--ink);
+  --color-ink-raised: var(--ink-raised);
+  --color-ink-raised-2: var(--ink-raised-2);
+  --color-paper: var(--paper);
+  --color-muted: var(--muted);
+  --color-slate: var(--slate);
+  --color-slate-bright: var(--slate-bright);
+  --color-ember: var(--ember);
+  --color-ember-bright: var(--ember-bright);
+  --color-line: var(--line);
+  --color-line-bright: var(--line-bright);
+
+  --font-display: var(--font-halant);
+  --font-body: var(--font-newsreader);
+  --font-ui: var(--font-work-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
+html {
+  background: var(--ink);
+  color-scheme: dark;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-body), Georgia, serif;
+}
+
+::selection {
+  background: var(--ember);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ember-bright);
+  outline-offset: 3px;
+}
+
+.font-display {
+  font-family: var(--font-display), Georgia, serif;
+}
+
+.font-ui {
+  font-family: var(--font-ui), system-ui, sans-serif;
+}
+
+.eyebrow {
+  font-family: var(--font-ui), system-ui, sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--slate-bright);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.container-gallery {
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+@media (min-width: 768px) {
+  .container-gallery {
+    padding-inline: 48px;
+  }
+}
+
+.current-line {
+  position: relative;
+}
+
+.current-line::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--slate) 15%,
+    var(--ember) 50%,
+    var(--slate) 85%,
+    transparent
+  );
+  opacity: 0.55;
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition: background-size 0.3s ease;
+}
+
+.link-underline:hover {
+  background-size: 100% 1px;
 }

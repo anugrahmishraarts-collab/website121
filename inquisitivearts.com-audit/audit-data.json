@@ -1,0 +1,300 @@
+{
+  "summary": {
+    "health_score": 61,
+    "business_type": "E-commerce (art gallery / print-on-demand, Shopify)"
+  },
+  "categories": [
+    {
+      "name": "Technical SEO",
+      "score": 80,
+      "what_works": [
+        "robots.txt is clean, current, and correctly points to the sitemap",
+        "HTTP\u2192HTTPS and www\u2192non-www redirects are clean single-hop 301s",
+        "Homepage title, meta description, canonical, viewport and hreflang tags are all present and server-rendered",
+        "Sitemap structure exactly matches the live URL set \u2014 no orphan pages",
+        "TLS certificate valid and auto-renewed via Shopify"
+      ],
+      "findings": [
+        {
+          "title": "Site returns HTTP 429 on theme-rendered pages under concurrent load",
+          "severity": "Medium",
+          "evidence": "Repeated requests to /, /products/canvas, /collections/frontpage and /pages/contact returned HTTP 429 with retry-after:60 for 10+ minutes, while static assets (robots.txt, sitemap.xml) stayed at 200 throughout.",
+          "recommendation": "Check installed Shopify apps for an overly aggressive bot/rate-limit configuration on storefront rendering, and check Search Console Crawl Stats for real-world 429 spikes during traffic surges."
+        },
+        {
+          "title": "hreflang for /hi and /ru is structurally correct, but translated content depth is unverified",
+          "severity": "Medium",
+          "evidence": "Homepage correctly declares hreflang for en/hi/ru/x-default, matching parallel /hi/ and /ru/ sitemaps with the same 6 products and 5 pages.",
+          "recommendation": "Confirm /hi and /ru render genuinely translated copy, not English text under a translated URL \u2014 hreflang pointing at un-translated pages provides no real value to those searchers."
+        },
+        {
+          "title": "Homepage meta description exceeds recommended length",
+          "severity": "Low",
+          "evidence": "Meta description is ~255 characters; Google typically truncates snippets around 155\u2013160.",
+          "recommendation": "Trim to ~150\u2013160 characters, front-loading \u201caward-winning Indian artist in London, limited edition prints.\u201d"
+        },
+        {
+          "title": "Security headers: solid baseline but minimal CSP and no Referrer-Policy",
+          "severity": "Low",
+          "evidence": "HSTS, X-Frame-Options and X-Content-Type-Options are all present; CSP only restricts frame-ancestors/mixed-content (no script-src); no Referrer-Policy header observed; HSTS max-age is ~91 days, below the 1-year threshold for preload eligibility.",
+          "recommendation": "Largely Shopify-platform-controlled and low risk for this site \u2014 low priority."
+        }
+      ]
+    },
+    {
+      "name": "Content Quality",
+      "score": 55,
+      "what_works": [
+        "Brand naming (\u201cInquisitive Arts\u201d / \u201cAnugrah Mishra\u201d) is consistent across titles, meta, schema and copy",
+        "Dedicated About / Artists / Portfolio / Contact pages give the right structural foundation for E-E-A-T content",
+        "Clean H1/title alignment and fully populated Open Graph tags on product pages"
+      ],
+      "findings": [
+        {
+          "title": "Product descriptions are thin, generic print-on-demand copy",
+          "severity": "High",
+          "evidence": "~99 words per product; \u201cLooking to add a little flair to your room or office? Look no further\u2014this canvas has a vivid, fade-resistant print\u2026\u201d is stock POD marketing copy with no dimensions, technique detail, or story behind the piece.",
+          "recommendation": "Write unique 300\u2013500 word descriptions per artwork: the story/inspiration, medium and process, precise dimensions, and a note in the artist's own voice. Highest-leverage content fix on the whole site."
+        },
+        {
+          "title": "Real artist credentials are absent from the pages meant to convert on them",
+          "severity": "High",
+          "evidence": "Anugrah Mishra is a real awarded artist (Freelands Painting Prize 2024, Anglia Ruskin Creative Showcase, Saatchi Art, MutualArt) \u2014 none of this appears on product pages, which read as generic stock listings instead.",
+          "recommendation": "Add a short \u201cabout the artist\u201d block on every product page referencing real exhibition history and the award \u2014 this is close to a free trust/conversion win."
+        },
+        {
+          "title": "No blog or story-driven content surface",
+          "severity": "Medium",
+          "evidence": "/blog and /blogs both return 404; no editorial content endpoint exists anywhere on the site.",
+          "recommendation": "Stand up a blog for inspiration stories, process posts, and collection launches \u2014 a natural fit for a gallery, and currently a total content-strategy gap."
+        },
+        {
+          "title": "Unfilled placeholder address live in legally-required product text",
+          "severity": "Medium",
+          "evidence": "Every product's GPSR compliance text reads: \u201cYou can also write to us at 123 Main Street, Anytown, Country\u2026\u201d \u2014 an unedited template placeholder, visible to every shopper.",
+          "recommendation": "Replace with the real registered business address immediately \u2014 cheap fix, outsized trust impact for a compliance-relevant statement."
+        },
+        {
+          "title": "About/Artists/Portfolio page depth could not be directly confirmed",
+          "severity": "Medium",
+          "evidence": "Pages exist in navigation and sitemap, but rate-limiting blocked direct retrieval of body copy this session; the one fully-verified page (a product) uses generic templated copy, which raises the risk these pages follow the same pattern.",
+          "recommendation": "Directly review these pages for a specific bio (training, exhibitions, UK location) and at least one first-person photo \u2014 downgrade this finding to Info if they're already substantive."
+        }
+      ]
+    },
+    {
+      "name": "On-Page & E-commerce SEO",
+      "score": 60,
+      "what_works": [
+        "Product structured data includes correct price, currency (GBP) and availability \u2014 many small Shopify stores omit this entirely",
+        "Canonical tags are correctly self-referencing with no variant-URL duplication risk",
+        "Collection and product-grid image alt text follows a consistent, descriptive \u201cTitle \u2013 Artist Name\u201d pattern"
+      ],
+      "findings": [
+        {
+          "title": "Catalog depth is critically thin for competitive e-commerce SEO",
+          "severity": "Critical",
+          "evidence": "6 product URLs across 2 collections, roughly 4 distinct artworks priced \u00a340\u2013\u00a344, no size/subject/room filtering.",
+          "recommendation": "Either treat the site as a portfolio/brand-search destination and stop chasing commercial category keywords, or commit to meaningfully expanding the catalog before investing further in product-page SEO."
+        },
+        {
+          "title": "Zero reviews or social proof anywhere on the site",
+          "severity": "High",
+          "evidence": "No aggregateRating, no rendered reviews \u2014 theme loads component-rating.css but no rating data exists to populate it.",
+          "recommendation": "Install a reviews app and actively request reviews post-purchase; for a \u00a340+ purchase from an unfamiliar brand this is one of the highest-leverage trust signals available."
+        },
+        {
+          "title": "No delivery, returns, or trust signals near Add to Cart",
+          "severity": "Medium",
+          "evidence": "Buy box shows only Add to Cart and Shop Pay; refund policy link exists only in the footer; no dedicated shipping-policy page exists at all.",
+          "recommendation": "Add a short trust strip beside the CTA: delivery window, return window, secure-checkout mention \u2014 standard on every competing UK print retailer."
+        },
+        {
+          "title": "Product URL slugs are non-descriptive",
+          "severity": "Medium",
+          "evidence": "On-page title is descriptive (\u201cLandscape II\u2013 Anugrah Mishra\u201d) but the URL is /products/canvas-5.",
+          "recommendation": "Rename slugs to e.g. /products/landscape-ii-canvas-print-anugrah-mishra \u2014 Shopify auto-redirects on handle change, so this is low-risk."
+        },
+        {
+          "title": "No breadcrumbs or related-products module",
+          "severity": "Medium",
+          "evidence": "No Home > Collection > Product breadcrumb trail and no \u201cyou may also like\u201d section anywhere in the product page DOM.",
+          "recommendation": "Add breadcrumbs (cheap win, also unlocks BreadcrumbList schema) and a simple cross-sell block."
+        },
+        {
+          "title": "Product meta description far exceeds display length",
+          "severity": "Low",
+          "evidence": "320 characters on the product page checked, roughly double Google's ~155\u2013160 char display limit, with no price or CTA included.",
+          "recommendation": "Trim to ~150 characters leading with product name and price, e.g. \u201cLandscape II canvas print by Anugrah Mishra \u2014 from \u00a340, ships UK-wide.\u201d"
+        }
+      ]
+    },
+    {
+      "name": "Structured Data",
+      "score": 50,
+      "what_works": [
+        "Valid WebSite + SearchAction schema, correctly formed for sitelinks search box eligibility",
+        "Product schema's Offer block has correct numeric price, ISO currency and availability enum"
+      ],
+      "findings": [
+        {
+          "title": "Duplicate Organization schema, and one copy is a broken unfilled template",
+          "severity": "High",
+          "evidence": "Homepage <head> emits two Organization blocks. The first is hand-coded with logo set to the literal placeholder \u201cpath-to-your-logo.png\u201d (unresolvable). The second, theme-generated block is correct.",
+          "recommendation": "Delete the hand-coded block entirely \u2014 it's redundant and its broken logo field is actively harmful to entity-clarity signals."
+        },
+        {
+          "title": "Product schema is missing reviews, return policy and shipping details",
+          "severity": "High",
+          "evidence": "aggregateRating/review, hasMerchantReturnPolicy and shippingDetails are all absent from Product JSON-LD, despite a refund-policy page existing on-site.",
+          "recommendation": "Add hasMerchantReturnPolicy and shippingDetails to the schema, stand up a real shipping-policy page, and start collecting reviews so aggregateRating can populate."
+        },
+        {
+          "title": "sameAs array is mostly empty and includes Shopify's own default TikTok, not the store's",
+          "severity": "Medium",
+          "evidence": "sameAs holds 6 empty strings, a correct Instagram link, and \u201chttps://tiktok.com/@shopify\u201d \u2014 a leftover default value.",
+          "recommendation": "Fill in the store's real social profiles and remove the erroneous Shopify TikTok entry \u2014 it currently misattributes this small gallery's entity to Shopify's own account."
+        }
+      ]
+    },
+    {
+      "name": "Performance",
+      "score": 45,
+      "what_works": [
+        "Shopify CDN responsive images are correctly implemented with full srcset breakpoints everywhere",
+        "Automatic WebP delivery confirmed live: a 4.5MB source JPEG was served to a real browser as a 67KB WebP",
+        "Native lazy-loading used correctly \u2014 below-fold images lazy, hero loads eagerly",
+        "HTML responses are Brotli-compressed with long-lived cache headers on static assets"
+      ],
+      "findings": [
+        {
+          "title": "Severe third-party script bloat \u2014 165+ requests on a single homepage load",
+          "severity": "Critical",
+          "evidence": "Two separate Google tag containers, DoubleClick and Merchant Center pixels, 4 sandboxed Shopify web-pixel workers, PushOwl, Sendvio, a Shopify Forms app, and an orphaned jQuery 1.10.1 loaded from ajax.googleapis.com \u2014 plus the full checkout-web bundle preloading on the homepage itself.",
+          "recommendation": "Audit installed apps and remove or defer anything not actively driving revenue; each pixel competes for main-thread time and directly hurts INP."
+        },
+        {
+          "title": "Unused Google Fonts request loads 26 unrelated font families",
+          "severity": "High",
+          "evidence": "Homepage requests fonts.googleapis.com with 26 families (Aclonica, Shrikhand, Permanent Marker, etc.) \u2014 none match the theme, which actually self-hosts Newsreader and Halant.",
+          "recommendation": "Find and remove the source (likely a leftover app/page-builder font-picker) \u2014 pure wasted DNS/connection/CSS weight."
+        },
+        {
+          "title": "Large hero image likely driving LCP",
+          "severity": "Medium",
+          "evidence": "Homepage hero JPEG fallback is ~547KB at 1800px width \u2014 the largest single asset on the page and the probable LCP candidate.",
+          "recommendation": "Re-export the hero source at tighter compression; a modern re-encode of a photographic hero at this size should land closer to 150\u2013250KB."
+        },
+        {
+          "title": "Full checkout bundle preloads on the homepage, not just at checkout",
+          "severity": "Low",
+          "evidence": "10+ checkout-web files plus ~20 Shop Pay accelerated-checkout chunks load on first homepage visit.",
+          "recommendation": "Largely platform-controlled (Shop Pay integration) \u2014 the real lever is reducing everything else competing for the same budget."
+        }
+      ]
+    },
+    {
+      "name": "AI Search Readiness (GEO)",
+      "score": 55,
+      "what_works": [
+        "UCP/agentic-commerce infrastructure (checkout, cart, catalog search) is fully live with real merchant/payment IDs, not placeholders",
+        "robots.txt is clean and permissive for every major AI crawler \u2014 GPTBot, ClaudeBot, PerplexityBot, Google-Extended all fall under an open wildcard allow",
+        "Brand entity naming is consistent across meta, schema and copy"
+      ],
+      "findings": [
+        {
+          "title": "Product copy is too generic and short to be a citable AI-search passage",
+          "severity": "High",
+          "evidence": "The ~99-word product description is generic marketing language, well under the ~134\u2013167 word self-contained, fact-dense passage AI answer engines tend to extract and cite.",
+          "recommendation": "Front-load a specific, quotable 1\u20132 sentence factual summary (medium, size, technique, story) before the marketing language \u2014 shared fix with the Content Quality product-copy finding."
+        },
+        {
+          "title": "Broken Organization schema undermines entity-clarity for AI systems",
+          "severity": "Medium",
+          "evidence": "Same broken placeholder logo and stray Shopify TikTok link in sameAs (see Structured Data) directly weaken the brand/authority signals GEO frameworks weight most after content quality.",
+          "recommendation": "Same fix as the Structured Data findings \u2014 resolves both issues at once."
+        },
+        {
+          "title": "No blog is a structural GEO gap, not just a content gap",
+          "severity": "Medium",
+          "evidence": "No live blog endpoint exists; AI citation research shows recent, first-person, self-contained passages are disproportionately what gets cited, and a product-only site has no surface for that.",
+          "recommendation": "Same underlying fix as the Content Quality blog finding \u2014 the highest-leverage new-content investment available for AI-citation eligibility."
+        },
+        {
+          "title": "llms.txt exists but is generic Shopify boilerplate, not brand-specific content",
+          "severity": "Low",
+          "evidence": "llms.txt is byte-for-byte identical to /agents.md \u2014 platform infrastructure docs with no curated facts about the artist or brand. Google explicitly ignores llms.txt for Search/AI Overviews, so this has no Google-side citation value regardless.",
+          "recommendation": "Low priority \u2014 real content on the pages themselves matters far more than this file. If keeping it, replace the boilerplate with a short curated brand summary for non-Google AI crawlers that do read it."
+        }
+      ]
+    },
+    {
+      "name": "Images",
+      "score": 70,
+      "what_works": [
+        "Collection and product-listing images use strong, consistent, artwork-specific alt text (\u201cTitle \u2013 Artist Name\u201d)",
+        "Every content image ships a full responsive srcset via the Shopify CDN",
+        "Explicit width/height attributes on all real content images keep CLS risk low"
+      ],
+      "findings": [
+        {
+          "title": "Hero and banner images have no alt text",
+          "severity": "High",
+          "evidence": "3 of 17 homepage images have alt=\"\" \u2014 including the full-bleed hero (\u201cRefugee's Resilience and Dreams\u201d) and two other large content banners.",
+          "recommendation": "Add descriptive alt text to every content image, following the naming convention already used correctly on collection pages."
+        },
+        {
+          "title": "Generic, duplicated alt text on product thumbnails",
+          "severity": "Low",
+          "evidence": "Size/frame mockup thumbnails on product pages all share the identical alt text \u201cProduct mockup\u201d regardless of which size is shown.",
+          "recommendation": "Differentiate alt text per thumbnail (e.g. \u201c16\u00d716 inch room mockup\u201d) \u2014 low priority, secondary images."
+        }
+      ]
+    }
+  ],
+  "action_plan": {
+    "phases": [
+      {
+        "name": "Phase 1 \u2014 Critical fixes",
+        "timeframe": "This week",
+        "items": [
+          "Replace the placeholder address (\u201c123 Main Street, Anytown, Country\u201d) in GPSR compliance text with the real registered address",
+          "Delete the broken hand-coded Organization schema block (dead logo URL) and clean the sameAs array (remove Shopify's TikTok, add real profiles)",
+          "Decide the site's identity deliberately: artist portfolio or commerce-led store \u2014 and align the homepage title/meta accordingly",
+          "Add alt text to the homepage hero and other missing banner images"
+        ]
+      },
+      {
+        "name": "Phase 2 \u2014 High-impact improvements",
+        "timeframe": "Weeks 2\u20133",
+        "items": [
+          "Rewrite all 6 product descriptions: real dimensions, technique, story, artist credentials (Freelands Painting Prize 2024)",
+          "Install a reviews app and begin collecting post-purchase reviews",
+          "Add hasMerchantReturnPolicy + shippingDetails to product schema and stand up a real shipping-policy page",
+          "Audit installed Shopify apps and remove/defer unused trackers (PushOwl, Sendvio, orphaned jQuery, unused Google Fonts request)",
+          "Add a delivery/returns trust strip next to Add to Cart"
+        ]
+      },
+      {
+        "name": "Phase 3 \u2014 Content & authority",
+        "timeframe": "Month 2",
+        "items": [
+          "Launch a blog: inspiration stories, process posts, exhibition/collection launches",
+          "Add an \u201cabout the artist\u201d block to every product page referencing real exhibitions and the award",
+          "Rename product URL slugs to descriptive, keyword-relevant handles",
+          "Add breadcrumbs and a related-products module",
+          "Confirm /hi and /ru serve genuinely translated content"
+        ]
+      },
+      {
+        "name": "Phase 4 \u2014 Monitoring",
+        "timeframe": "Ongoing",
+        "items": [
+          "Watch Search Console Crawl Stats for real-world 429s during traffic spikes",
+          "Track branded vs. non-branded query performance \u2014 branded search is currently the site's only proven strength",
+          "Re-run this audit after Phase 1\u20132 fixes to confirm score improvement"
+        ]
+      }
+    ]
+  }
+}
