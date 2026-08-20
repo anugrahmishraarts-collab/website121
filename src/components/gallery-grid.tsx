@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useTransition, ViewTransition } from "react";
 import { Reveal } from "@/components/reveal";
 import { ArtworkCard } from "@/components/artwork-card";
 import { cn } from "@/lib/utils";
@@ -13,6 +13,10 @@ export function GalleryGrid({ artworks }: { artworks: Artwork[] }) {
   }, [artworks]);
 
   const [active, setActive] = useState("All");
+  // Plain setState doesn't activate <ViewTransition> — only useTransition,
+  // Suspense, or useDeferredValue do — so the filter crossfade below needs
+  // the state change wrapped in startTransition to actually animate.
+  const [, startTransition] = useTransition();
 
   const filtered =
     active === "All" ? artworks : artworks.filter((a) => a.collection === active);
@@ -24,7 +28,7 @@ export function GalleryGrid({ artworks }: { artworks: Artwork[] }) {
           {collections.map((c) => (
             <button
               key={c}
-              onClick={() => setActive(c)}
+              onClick={() => startTransition(() => setActive(c))}
               className={cn(
                 "px-4 py-2 border transition-colors",
                 active === c
@@ -38,17 +42,19 @@ export function GalleryGrid({ artworks }: { artworks: Artwork[] }) {
         </div>
       )}
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-14">
-        {filtered.map((artwork, i) => (
-          <Reveal key={artwork.id} delay={(i % 3) * 0.06}>
-            <ArtworkCard artwork={artwork} />
-          </Reveal>
-        ))}
-      </div>
+      <ViewTransition key={active} name="gallery-grid" share="auto" enter="auto" default="none">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-14">
+          {filtered.map((artwork, i) => (
+            <Reveal key={artwork.id} delay={(i % 3) * 0.06}>
+              <ArtworkCard artwork={artwork} />
+            </Reveal>
+          ))}
+        </div>
 
-      {filtered.length === 0 && (
-        <p className="font-body text-muted text-center py-20">No works in this collection yet.</p>
-      )}
+        {filtered.length === 0 && (
+          <p className="font-body text-muted text-center py-20">No works in this collection yet.</p>
+        )}
+      </ViewTransition>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 
 export function HeroCurrent() {
   return (
-    <div className="absolute inset-0 overflow-hidden" aria-hidden>
+    <div className="hero-parallax absolute inset-0 overflow-hidden" aria-hidden>
       <motion.div
         className="absolute -top-1/4 -left-1/4 w-[70vw] h-[70vw] rounded-full"
         style={{

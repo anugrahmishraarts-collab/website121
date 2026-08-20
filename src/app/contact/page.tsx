@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Reveal } from "@/components/reveal";
 import { ContactForm } from "@/components/contact-form";
+import { PageTransition } from "@/components/page-transition";
 import { getArtworkBySlug } from "@/lib/data";
 
 export const metadata: Metadata = {
@@ -15,6 +16,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Sear
   const artwork = artworkSlug ? await getArtworkBySlug(artworkSlug) : null;
 
   return (
+    <PageTransition>
     <div className="container-gallery pt-40 pb-28">
       <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-16 lg:gap-24">
         <div>
@@ -44,5 +46,6 @@ export default async function ContactPage({ searchParams }: { searchParams: Sear
         </Reveal>
       </div>
     </div>
+    </PageTransition>
   );
 }

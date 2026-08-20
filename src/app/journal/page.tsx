@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/reveal";
+import { PageTransition } from "@/components/page-transition";
 import { getPressFeatures } from "@/lib/data";
 
 export const metadata: Metadata = {
@@ -12,6 +13,7 @@ export default async function JournalPage() {
   const press = await getPressFeatures();
 
   return (
+    <PageTransition>
     <div className="container-gallery pt-40 pb-28">
       <Reveal>
         <p className="eyebrow mb-4">Journal</p>
@@ -56,5 +58,6 @@ export default async function JournalPage() {
         ))}
       </ul>
     </div>
+    </PageTransition>
   );
 }

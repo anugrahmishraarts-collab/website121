@@ -2,6 +2,7 @@
 
 :root {
   --ink: #12181d;
+  --ink-deep: #090c0f;
   --ink-raised: #1a2228;
   --ink-raised-2: #212b32;
   --paper: #ede9e0;
@@ -12,10 +13,29 @@
   --ember-bright: #e08248;
   --line: #2a3338;
   --line-bright: #3a454c;
+
+  /* Glass surfaces — translucent panels over the ink gradient mesh below.
+     Kept as rgba rather than color-mix so backdrop-filter has something
+     genuinely see-through to blur, not just an opaque tint. */
+  --glass-bg: rgba(20, 27, 33, 0.62);
+  --glass-bg-raised: rgba(28, 37, 44, 0.55);
+  --glass-border: rgba(237, 233, 224, 0.08);
+  --glass-border-bright: rgba(237, 233, 224, 0.16);
+
+  /* Spring/bounce timing curves (linear() easing) for hover + press
+     micro-interactions. Generated for a soft overshoot suited to small
+     UI elements (buttons, cards) — not a cartoonish bounce. */
+  --ease-spring: linear(
+    0, 0.104 4.5%, 0.397 12.9%, 0.61 19.2%, 0.752 25%, 0.849 30.9%,
+    0.937 38.8%, 0.996 47.6%, 1.017 55.1%, 1.021 62.6%, 1.008 73.6%,
+    1 100%
+  );
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @theme inline {
   --color-ink: var(--ink);
+  --color-ink-deep: var(--ink-deep);
   --color-ink-raised: var(--ink-raised);
   --color-ink-raised-2: var(--ink-raised-2);
   --color-paper: var(--paper);
@@ -26,6 +46,7 @@
   --color-ember-bright: var(--ember-bright);
   --color-line: var(--line);
   --color-line-bright: var(--line-bright);
+  --color-glass-border: var(--glass-border);
 
   --font-display: var(--font-halant);
   --font-body: var(--font-newsreader);
@@ -47,9 +68,17 @@ html {
 }
 
 body {
-  background: var(--ink);
   color: var(--paper);
   font-family: var(--font-body), Georgia, serif;
+  /* A quiet gradient mesh instead of a flat fill — two very low-opacity
+     glows anchored to the top corners, fixed so they read as ambient
+     studio light rather than scrolling artwork. Cheap: it's a single
+     paint, no animation. */
+  background-color: var(--ink);
+  background-image:
+    radial-gradient(ellipse 1100px 700px at 12% -10%, color-mix(in srgb, var(--slate) 10%, transparent), transparent 60%),
+    radial-gradient(ellipse 900px 600px at 100% 0%, color-mix(in srgb, var(--ember) 7%, transparent), transparent 55%);
+  background-attachment: fixed;
 }
 
 ::selection {
@@ -137,4 +166,166 @@ body {
 
 .link-underline:hover {
   background-size: 100% 1px;
+}
+
+/* ── Glass surfaces ───────────────────────────────────────────────── */
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid var(--glass-border);
+}
+
+.glass-raised {
+  background: var(--glass-bg-raised);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid var(--glass-border-bright);
+}
+
+/* ── Buttons — spring hover with a soft ember bloom ──────────────── */
+
+.btn-primary {
+  position: relative;
+  isolation: isolate;
+  translate: 0 0;
+  scale: 1;
+  transition: scale 0.5s var(--ease-spring), box-shadow 0.4s var(--ease-out-expo);
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--ember) 45%, transparent);
+}
+
+.btn-primary:hover {
+  scale: 1.035;
+  box-shadow: 0 8px 28px -6px color-mix(in srgb, var(--ember) 55%, transparent);
+}
+
+.btn-primary:active {
+  scale: 0.985;
+  transition-duration: 0.15s;
+}
+
+/* ── Cards — independent-transform lift, spring-eased ────────────── */
+
+.lift-card {
+  translate: 0 0;
+  scale: 1;
+  transition: translate 0.5s var(--ease-spring), scale 0.5s var(--ease-spring);
+}
+
+.lift-card:hover {
+  translate: 0 -6px;
+  scale: 1.012;
+}
+
+/* ── Placeholder shimmer — a slow diagonal light sweep ───────────── */
+
+@media (prefers-reduced-motion: no-preference) {
+  .placeholder-shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      115deg,
+      transparent 30%,
+      color-mix(in srgb, var(--paper) 7%, transparent) 48%,
+      transparent 66%
+    );
+    background-size: 250% 100%;
+    animation: shimmer-sweep 7s ease-in-out infinite;
+  }
+}
+
+@keyframes shimmer-sweep {
+  0%, 15% { background-position: 120% 0; }
+  85%, 100% { background-position: -120% 0; }
+}
+
+/* ── Scroll-linked ambient drift (progressive enhancement only —
+   decorative, so browsers without support simply keep the JS-driven
+   loop from HeroCurrent with no fallback needed) ───────────────────── */
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
+    @keyframes hero-parallax-fade {
+      to {
+        translate: 0 8vh;
+        opacity: 0.25;
+      }
+    }
+
+    .hero-parallax {
+      animation: hero-parallax-fade linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0px 70vh;
+    }
+  }
+}
+
+/* ── View Transitions ─────────────────────────────────────────────
+   Shared-element morph (gallery thumbnail → artwork hero), directional
+   navigation slides, and a fixed header that never itself animates —
+   see components for the `name` / `transitionTypes` wiring.          */
+
+::view-transition {
+  pointer-events: none;
+}
+
+::view-transition-group(.morph) {
+  animation-duration: 480ms;
+  animation-timing-function: var(--ease-out-expo);
+}
+::view-transition-image-pair(.morph) {
+  animation-name: via-blur;
+  animation-duration: 480ms;
+}
+@keyframes via-blur {
+  35% {
+    filter: blur(4px);
+  }
+}
+
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+::view-transition-old(site-header) {
+  display: none;
+}
+::view-transition-new(site-header) {
+  animation: none;
+}
+
+::view-transition-old(.nav-forward) {
+  --slide-offset: -48px;
+  animation: 150ms ease-in both fade reverse, 420ms var(--ease-out-expo) both slide reverse;
+}
+::view-transition-new(.nav-forward) {
+  --slide-offset: 48px;
+  animation: 260ms ease-out 130ms both fade, 420ms var(--ease-out-expo) both slide;
+}
+::view-transition-old(.nav-back) {
+  --slide-offset: 48px;
+  animation: 150ms ease-in both fade reverse, 420ms var(--ease-out-expo) both slide reverse;
+}
+::view-transition-new(.nav-back) {
+  --slide-offset: -48px;
+  animation: 260ms ease-out 130ms both fade, 420ms var(--ease-out-expo) both slide;
+}
+
+@keyframes fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slide {
+  from { translate: var(--slide-offset); }
+  to { translate: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }

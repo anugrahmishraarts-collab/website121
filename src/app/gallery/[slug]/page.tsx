@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import { ViewTransition } from "react";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/reveal";
 import { ArtworkPlaceholder } from "@/components/artwork-placeholder";
 import { ArtworkCard } from "@/components/artwork-card";
+import { PageTransition } from "@/components/page-transition";
 import { getArtworkBySlug, getArtworks } from "@/lib/data";
 
 type Params = Promise<{ slug: string }>;
@@ -32,9 +34,14 @@ export default async function ArtworkPage({ params }: { params: Params }) {
     artwork.status === "sold" ? "Sold" : artwork.status === "available" ? "Available" : "Enquire to purchase";
 
   return (
+    <PageTransition>
     <div className="container-gallery pt-40 pb-28">
       <Reveal>
-        <Link href="/gallery" className="font-ui text-sm link-underline text-paper/70 inline-flex items-center gap-2 mb-12">
+        <Link
+          href="/gallery"
+          transitionTypes={["nav-back"]}
+          className="font-ui text-sm link-underline text-paper/70 inline-flex items-center gap-2 mb-12"
+        >
           <ArrowLeft size={14} /> Back to gallery
         </Link>
       </Reveal>
@@ -42,18 +49,20 @@ export default async function ArtworkPage({ params }: { params: Params }) {
       <div className="grid lg:grid-cols-[1.2fr_1fr] gap-14 lg:gap-20">
         <Reveal>
           <div className="relative aspect-[4/5] border border-line bg-ink-raised">
-            {artwork.image_url ? (
-              <Image
-                src={artwork.image_url}
-                alt={artwork.title}
-                fill
-                priority
-                className="object-cover"
-                sizes="(min-width: 1024px) 55vw, 90vw"
-              />
-            ) : (
-              <ArtworkPlaceholder title={artwork.title} tone={artwork.placeholder_tone} />
-            )}
+            <ViewTransition name={`artwork-${artwork.slug}`} share="morph" default="none">
+              {artwork.image_url ? (
+                <Image
+                  src={artwork.image_url}
+                  alt={artwork.title}
+                  fill
+                  priority
+                  className="object-cover"
+                  sizes="(min-width: 1024px) 55vw, 90vw"
+                />
+              ) : (
+                <ArtworkPlaceholder title={artwork.title} tone={artwork.placeholder_tone} />
+              )}
+            </ViewTransition>
           </div>
         </Reveal>
 
@@ -88,7 +97,8 @@ export default async function ArtworkPage({ params }: { params: Params }) {
           <Reveal delay={0.3}>
             <Link
               href={`/contact?artwork=${encodeURIComponent(artwork.slug)}`}
-              className="font-ui text-sm inline-flex items-center gap-2 bg-ember hover:bg-ember-bright text-ink px-6 py-3.5 transition-colors mt-8"
+              transitionTypes={["nav-forward"]}
+              className="btn-primary font-ui text-sm inline-flex items-center gap-2 bg-ember hover:bg-ember-bright text-ink px-6 py-3.5 transition-colors mt-8"
             >
               Enquire about this piece <ArrowRight size={15} />
             </Link>
@@ -111,5 +121,6 @@ export default async function ArtworkPage({ params }: { params: Params }) {
         </div>
       )}
     </div>
+    </PageTransition>
   );
 }

@@ -4,6 +4,8 @@ import { HeroCurrent } from "@/components/hero-current";
 import { Reveal } from "@/components/reveal";
 import { ArtworkCard } from "@/components/artwork-card";
 import { ArtworkPlaceholder } from "@/components/artwork-placeholder";
+import { KineticHeadline } from "@/components/kinetic-headline";
+import { PageTransition } from "@/components/page-transition";
 import { getFeaturedArtworks, getPressFeatures } from "@/lib/data";
 import { mural, bio } from "@/lib/seed-data";
 
@@ -11,7 +13,7 @@ export default async function Home() {
   const [featured, press] = await Promise.all([getFeaturedArtworks(), getPressFeatures()]);
 
   return (
-    <>
+    <PageTransition>
       {/* Hero */}
       <section className="relative min-h-[92vh] flex items-end pb-20 md:pb-28 pt-32 overflow-hidden">
         <HeroCurrent />
@@ -19,11 +21,10 @@ export default async function Home() {
           <Reveal>
             <p className="eyebrow mb-6">London &middot; Contemporary Painter</p>
           </Reveal>
-          <Reveal delay={0.1}>
-            <h1 className="font-display text-balance text-[clamp(2.4rem,6vw,5.2rem)] leading-[1.05] text-paper max-w-4xl">
-              &ldquo;Painting offers what film cannot: stillness.&rdquo;
-            </h1>
-          </Reveal>
+          <KineticHeadline
+            text="“Painting offers what film cannot: stillness.”"
+            className="font-display text-balance text-[clamp(2.4rem,6vw,5.2rem)] leading-[1.05] text-paper max-w-4xl"
+          />
           <Reveal delay={0.2}>
             <p className="font-body text-lg text-paper/75 mt-8 max-w-xl leading-relaxed">
               The studio of <span className="italic">Anugrah Mishra</span> — paintings that
@@ -35,11 +36,12 @@ export default async function Home() {
             <div className="flex flex-wrap items-center gap-6 mt-10">
               <Link
                 href="/gallery"
-                className="font-ui text-sm inline-flex items-center gap-2 bg-ember hover:bg-ember-bright text-ink px-6 py-3.5 transition-colors"
+                transitionTypes={["nav-forward"]}
+                className="btn-primary font-ui text-sm inline-flex items-center gap-2 bg-ember hover:bg-ember-bright text-ink px-6 py-3.5 transition-colors"
               >
                 View the gallery <ArrowRight size={15} />
               </Link>
-              <Link href="/about" className="font-ui text-sm link-underline text-paper/85">
+              <Link href="/about" transitionTypes={["nav-forward"]} className="font-ui text-sm link-underline text-paper/85">
                 The artist&rsquo;s story
               </Link>
             </div>
@@ -196,7 +198,8 @@ export default async function Home() {
             <div className="mt-10">
               <Link
                 href="/contact"
-                className="font-ui text-sm inline-flex items-center gap-2 bg-ember hover:bg-ember-bright text-ink px-7 py-3.5 transition-colors"
+                transitionTypes={["nav-forward"]}
+                className="btn-primary font-ui text-sm inline-flex items-center gap-2 bg-ember hover:bg-ember-bright text-ink px-7 py-3.5 transition-colors"
               >
                 Get in touch <ArrowRight size={15} />
               </Link>
@@ -204,6 +207,6 @@ export default async function Home() {
           </Reveal>
         </div>
       </section>
-    </>
+    </PageTransition>
   );
 }

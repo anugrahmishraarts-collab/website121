@@ -88,7 +88,7 @@ export function ContactForm({
       <button
         type="submit"
         disabled={pending}
-        className="font-ui text-sm inline-flex items-center gap-2 bg-ember hover:bg-ember-bright disabled:opacity-60 text-ink px-6 py-3.5 transition-colors"
+        className="btn-primary font-ui text-sm inline-flex items-center gap-2 bg-ember hover:bg-ember-bright disabled:opacity-60 text-ink px-6 py-3.5 transition-colors"
       >
         {pending ? "Sending…" : "Send message"} <Send size={15} />
       </button>

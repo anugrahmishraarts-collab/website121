@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Reveal } from "@/components/reveal";
 import { ArtworkPlaceholder } from "@/components/artwork-placeholder";
+import { PageTransition } from "@/components/page-transition";
 import { bio, mural } from "@/lib/seed-data";
 
 export const metadata: Metadata = {
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
+    <PageTransition>
     <div>
       <section className="container-gallery pt-40 pb-20">
         <Reveal>
@@ -101,5 +103,6 @@ export default function AboutPage() {
         </div>
       </section>
     </div>
+    </PageTransition>
   );
 }

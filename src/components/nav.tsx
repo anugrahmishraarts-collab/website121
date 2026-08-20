@@ -36,33 +36,51 @@ export function Nav() {
 
   return (
     <header
+      style={{ viewTransitionName: "site-header" }}
       className={cn(
-        "fixed top-0 inset-x-0 z-40 transition-colors duration-500",
-        scrolled || open ? "bg-ink/90 backdrop-blur-md border-b border-line" : "bg-transparent"
+        "fixed top-0 inset-x-0 z-40 transition-[background-color,border-color] duration-500",
+        scrolled || open ? "glass border-b" : "bg-transparent border-b border-transparent"
       )}
     >
       <nav className="container-gallery flex items-center justify-between h-20">
-        <Link href="/" className="font-display text-lg tracking-tight text-paper">
-          Inquisitive Arts
+        <Link
+          href="/"
+          transitionTypes={pathname === "/" ? [] : ["nav-back"]}
+          className="group font-display text-lg tracking-tight text-paper"
+        >
+          <span className="inline-block transition-transform duration-500 [transition-timing-function:var(--ease-spring)] group-hover:-translate-y-[1px]">
+            Inquisitive Arts
+          </span>
           <span className="block font-ui text-[10px] tracking-[0.2em] uppercase text-muted mt-0.5">
             Anugrah Mishra
           </span>
         </Link>
 
-        <ul className="hidden md:flex items-center gap-10 font-ui text-sm">
-          {LINKS.map((link) => (
-            <li key={link.href}>
-              <Link
-                href={link.href}
-                className={cn(
-                  "link-underline pb-0.5 transition-colors",
-                  pathname === link.href ? "text-ember-bright" : "text-paper/85 hover:text-paper"
+        <ul className="hidden md:flex items-center gap-2 font-ui text-sm">
+          {LINKS.map((link) => {
+            const active = pathname === link.href;
+            return (
+              <li key={link.href} className="relative">
+                <Link
+                  href={link.href}
+                  transitionTypes={["nav-forward"]}
+                  className={cn(
+                    "relative z-10 block px-4 py-2 transition-colors",
+                    active ? "text-ember-bright" : "text-paper/80 hover:text-paper"
+                  )}
+                >
+                  {link.label}
+                </Link>
+                {active && (
+                  <motion.span
+                    layoutId="nav-active-pill"
+                    className="absolute inset-0 bg-ember/10 border border-ember/25"
+                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                  />
                 )}
-              >
-                {link.label}
-              </Link>
-            </li>
-          ))}
+              </li>
+            );
+          })}
         </ul>
 
         <button
@@ -83,7 +101,7 @@ export function Nav() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="md:hidden overflow-hidden border-t border-line bg-ink"
+            className="md:hidden overflow-hidden border-t border-line glass"
           >
             {LINKS.map((link) => (
               <li key={link.href} className="border-b border-line/60">

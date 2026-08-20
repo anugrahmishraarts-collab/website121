@@ -39,7 +39,7 @@ export function ArtworkPlaceholder({
   const gradId = `g-${seed}`;
 
   return (
-    <div className={cn("relative w-full h-full overflow-hidden", className)}>
+    <div className={cn("placeholder-shimmer relative w-full h-full overflow-hidden", className)}>
       <svg
         viewBox="0 0 400 500"
         className="w-full h-full"
