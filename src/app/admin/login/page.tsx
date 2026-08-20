@@ -11,13 +11,13 @@ export default function AdminLoginPage() {
         {isSupabaseConfigured() ? (
           <LoginForm />
         ) : (
-          <div className="border border-line p-6 font-body text-sm text-paper/75 leading-relaxed">
+          <div className="border border-line p-6 font-body text-sm text-paper/75 leading-relaxed break-words">
             The admin dashboard needs a connected Supabase project before anyone can sign in. Add
-            <code className="mx-1 px-1.5 py-0.5 bg-ink-raised text-ember-bright text-xs">NEXT_PUBLIC_SUPABASE_URL</code>
+            <code className="mx-1 px-1.5 py-0.5 bg-ink-raised text-ember-bright text-xs break-all">NEXT_PUBLIC_SUPABASE_URL</code>
             and
-            <code className="mx-1 px-1.5 py-0.5 bg-ink-raised text-ember-bright text-xs">NEXT_PUBLIC_SUPABASE_ANON_KEY</code>
-            to <code className="px-1.5 py-0.5 bg-ink-raised text-ember-bright text-xs">.env.local</code>, run the
-            migration in <code className="px-1.5 py-0.5 bg-ink-raised text-ember-bright text-xs">supabase/migrations</code>,
+            <code className="mx-1 px-1.5 py-0.5 bg-ink-raised text-ember-bright text-xs break-all">NEXT_PUBLIC_SUPABASE_ANON_KEY</code>
+            to <code className="px-1.5 py-0.5 bg-ink-raised text-ember-bright text-xs break-all">.env.local</code>, run the
+            migration in <code className="px-1.5 py-0.5 bg-ink-raised text-ember-bright text-xs break-all">supabase/migrations</code>,
             and create a user in the Supabase Auth dashboard.
           </div>
         )}

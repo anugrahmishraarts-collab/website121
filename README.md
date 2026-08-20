@@ -37,14 +37,26 @@ login form.
    NEXT_PUBLIC_SUPABASE_ANON_KEY=
    ```
 4. In the Supabase SQL Editor, run `supabase/migrations/0001_init.sql`, then
-   `supabase/seed.sql` — this creates the `artworks`, `press_features` and
-   `inquiries` tables (with row-level security policies) and a public
-   `artwork-images` storage bucket, then seeds it with the same six artworks
-   and press features already on the site.
-5. In **Authentication → Users**, manually create one user (email + password)
-   for Anugrah — this is the only account that can sign in to `/admin`. There
-   is no public sign-up.
-6. Restart `npm run dev`. `/admin` will now show a real login form.
+   `supabase/seed.sql` — this creates the `artworks`, `press_features`,
+   `inquiries` and `admins` tables (with row-level security policies) and a
+   public `artwork-images` storage bucket, then seeds it with the same six
+   artworks and press features already on the site.
+5. In **Authentication → Providers → Email**, turn **off** "Allow new users
+   to sign up." This is a single-admin site — the only account should be the
+   one you create next, not anyone who finds the login page.
+6. In **Authentication → Users → Add user**, manually create one user (email
+   + password) for Anugrah, then copy their **User UID**.
+7. Back in the SQL Editor, run (with that UID):
+   ```sql
+   insert into public.admins (user_id, email)
+   values ('<paste-user-uid-here>', 'their@email.com');
+   ```
+   This step is required, not optional — being a valid logged-in Supabase
+   user is deliberately *not* enough to reach `/admin` on its own (public
+   signup existing by default is a common way these dashboards get
+   compromised), so without this row the account can log in but every page
+   and action will bounce back to the login screen.
+8. Restart `npm run dev`. `/admin` will now show a real login form.
 
 Once connected, every public page automatically switches from the seed data
 to live Supabase data — no code changes needed.

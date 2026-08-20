@@ -2,8 +2,8 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { redirect } from "next/navigation";
 import { LayoutDashboard, Image as ImageIcon, MessageSquare, LogOut, ExternalLink } from "lucide-react";
-import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
+import { requireAdmin } from "@/lib/supabase/admin";
 import { signOut } from "@/app/admin/actions";
 
 export default async function AdminDashboardLayout({ children }: { children: ReactNode }) {
@@ -11,14 +11,9 @@ export default async function AdminDashboardLayout({ children }: { children: Rea
     redirect("/admin/login");
   }
 
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect("/admin/login");
-  }
+  // Gates every nested route (Overview, Artworks, Inquiries) on real admin
+  // membership, not just "has a session" — see requireAdmin() for why.
+  const user = await requireAdmin();
 
   return (
     <div className="min-h-screen bg-ink flex">

@@ -4,6 +4,8 @@ import { z } from "zod";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { requireAdmin } from "@/lib/supabase/admin";
+import { sniffImage, MAX_IMAGE_BYTES } from "@/lib/image-validation";
 
 export type FormState = { status: "idle" | "error"; message?: string };
 
@@ -12,10 +14,21 @@ export async function signIn(_prev: FormState, formData: FormData): Promise<Form
   const password = String(formData.get("password") ?? "");
 
   const supabase = await createClient();
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
     return { status: "error", message: "Incorrect email or password." };
+  }
+
+  const { data: adminRow } = await supabase
+    .from("admins")
+    .select("user_id")
+    .eq("user_id", data.user.id)
+    .maybeSingle();
+
+  if (!adminRow) {
+    await supabase.auth.signOut();
+    return { status: "error", message: "This account doesn't have dashboard access." };
   }
 
   redirect("/admin");
@@ -56,13 +69,25 @@ async function uploadImageIfPresent(formData: FormData, slug: string) {
   const file = formData.get("image");
   if (!(file instanceof File) || file.size === 0) return undefined;
 
+  if (file.size > MAX_IMAGE_BYTES) {
+    throw new Error("Image is too large (max 15MB).");
+  }
+
+  // Identify the file by its real signature — never trust the client's
+  // filename extension or File.type, both of which are attacker-controlled
+  // and are how a disguised .svg/.html upload could end up served as an
+  // "image" from our own storage domain.
+  const sniffed = await sniffImage(file);
+  if (!sniffed) {
+    throw new Error("Unsupported image format. Use PNG, JPG, WEBP or AVIF.");
+  }
+
   const supabase = await createClient();
-  const ext = file.name.split(".").pop() || "jpg";
-  const path = `${slug}-${Date.now()}.${ext}`;
+  const path = `${slug}-${Date.now()}.${sniffed.ext}`;
 
   const { error } = await supabase.storage.from("artwork-images").upload(path, file, {
-    upsert: true,
-    contentType: file.type || undefined,
+    upsert: false,
+    contentType: sniffed.contentType,
   });
   if (error) throw new Error(error.message);
 
@@ -71,6 +96,8 @@ async function uploadImageIfPresent(formData: FormData, slug: string) {
 }
 
 export async function createArtwork(_prev: FormState, formData: FormData): Promise<FormState> {
+  await requireAdmin();
+
   const title = String(formData.get("title") ?? "");
   const rawSlug = String(formData.get("slug") ?? "") || slugify(title);
 
@@ -118,6 +145,8 @@ export async function updateArtwork(
   _prev: FormState,
   formData: FormData
 ): Promise<FormState> {
+  await requireAdmin();
+
   const title = String(formData.get("title") ?? "");
   const rawSlug = String(formData.get("slug") ?? "") || slugify(title);
 
@@ -162,6 +191,8 @@ export async function updateArtwork(
 }
 
 export async function deleteArtwork(id: string) {
+  await requireAdmin();
+
   const supabase = await createClient();
   const { error } = await supabase.from("artworks").delete().eq("id", id);
   if (error) throw new Error(error.message);
@@ -172,6 +203,8 @@ export async function deleteArtwork(id: string) {
 }
 
 export async function deleteInquiry(id: string) {
+  await requireAdmin();
+
   const supabase = await createClient();
   const { error } = await supabase.from("inquiries").delete().eq("id", id);
   if (error) throw new Error(error.message);

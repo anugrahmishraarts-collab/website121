@@ -54,6 +54,35 @@ create trigger artworks_set_updated_at
   before update on public.artworks
   for each row execute function public.set_updated_at();
 
+-- Admin allowlist. Supabase Auth permits public signup by default, so "is
+-- this user authenticated at all" is NOT the same as "is this user allowed
+-- to manage the site" — every write policy below must check membership
+-- here, not just the authenticated role.
+create table if not exists public.admins (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  email text,
+  created_at timestamptz not null default now()
+);
+
+alter table public.admins enable row level security;
+
+-- Nobody reads/writes this table over the API — only via the SQL editor
+-- (service role bypasses RLS anyway) and the is_admin() function below,
+-- which runs as the function owner (security definer) rather than the
+-- calling user, so it does not itself require a policy to succeed.
+create policy "No client access to admins" on public.admins
+  for all to anon, authenticated using (false) with check (false);
+
+create or replace function public.is_admin()
+returns boolean
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select exists (select 1 from public.admins where user_id = auth.uid());
+$$;
+
 -- Row Level Security
 alter table public.artworks enable row level security;
 alter table public.press_features enable row level security;
@@ -66,28 +95,31 @@ create policy "Public can read artworks" on public.artworks
 create policy "Public can read press features" on public.press_features
   for select using (true);
 
--- Only authenticated users (the admin account) can write.
-create policy "Authenticated can insert artworks" on public.artworks
-  for insert to authenticated with check (true);
+-- Only rows in public.admins can write — being merely "authenticated"
+-- (e.g. a self-signed-up visitor) is not sufficient.
+create policy "Admins can insert artworks" on public.artworks
+  for insert to authenticated with check (public.is_admin());
 
-create policy "Authenticated can update artworks" on public.artworks
-  for update to authenticated using (true) with check (true);
+create policy "Admins can update artworks" on public.artworks
+  for update to authenticated using (public.is_admin()) with check (public.is_admin());
 
-create policy "Authenticated can delete artworks" on public.artworks
-  for delete to authenticated using (true);
+create policy "Admins can delete artworks" on public.artworks
+  for delete to authenticated using (public.is_admin());
 
-create policy "Authenticated can manage press features" on public.press_features
-  for all to authenticated using (true) with check (true);
+create policy "Admins can manage press features" on public.press_features
+  for all to authenticated using (public.is_admin()) with check (public.is_admin());
 
--- Anyone can submit an inquiry, but only the admin can read them back.
+-- Anyone can submit an inquiry, but only an admin can read them back —
+-- inquiries contain a visitor's name/email/message, so this is the
+-- policy that protects that PII.
 create policy "Public can submit inquiries" on public.inquiries
   for insert to anon, authenticated with check (true);
 
-create policy "Authenticated can read inquiries" on public.inquiries
-  for select to authenticated using (true);
+create policy "Admins can read inquiries" on public.inquiries
+  for select to authenticated using (public.is_admin());
 
-create policy "Authenticated can delete inquiries" on public.inquiries
-  for delete to authenticated using (true);
+create policy "Admins can delete inquiries" on public.inquiries
+  for delete to authenticated using (public.is_admin());
 
 -- Public storage bucket for artwork images, uploaded via the admin dashboard.
 insert into storage.buckets (id, name, public)
@@ -97,11 +129,21 @@ on conflict (id) do nothing;
 create policy "Public can view artwork images" on storage.objects
   for select using (bucket_id = 'artwork-images');
 
-create policy "Authenticated can upload artwork images" on storage.objects
-  for insert to authenticated with check (bucket_id = 'artwork-images');
+create policy "Admins can upload artwork images" on storage.objects
+  for insert to authenticated with check (bucket_id = 'artwork-images' and public.is_admin());
 
-create policy "Authenticated can update artwork images" on storage.objects
-  for update to authenticated using (bucket_id = 'artwork-images');
+create policy "Admins can update artwork images" on storage.objects
+  for update to authenticated using (bucket_id = 'artwork-images' and public.is_admin());
 
-create policy "Authenticated can delete artwork images" on storage.objects
-  for delete to authenticated using (bucket_id = 'artwork-images');
+create policy "Admins can delete artwork images" on storage.objects
+  for delete to authenticated using (bucket_id = 'artwork-images' and public.is_admin());
+
+-- ── One-time setup, after this migration runs ──────────────────────────
+-- 1. In the Supabase dashboard: Authentication → Providers → Email, turn
+--    OFF "Allow new users to sign up". This is a single-admin site; the
+--    only account should be the one you create manually in step 2.
+-- 2. Authentication → Users → Add user, create the admin's login
+--    (email + password), then copy their User UID.
+-- 3. Run, with that UID:
+--      insert into public.admins (user_id, email)
+--      values ('<paste-user-uid-here>', '<their-email>');

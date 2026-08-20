@@ -4,6 +4,7 @@ import "./globals.css";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { ScrollProgress } from "@/components/scroll-progress";
+import { MotionProvider } from "@/components/motion-provider";
 
 const halant = Halant({
   variable: "--font-halant",
@@ -42,11 +43,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${halant.variable} ${newsreader.variable} ${workSans.variable} antialiased`}
     >
       <body className="min-h-screen flex flex-col">
-        <ScrollProgress />
-        <div className="grain" />
-        <Nav />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <MotionProvider>
+          <ScrollProgress />
+          <div className="grain" />
+          <Nav />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </MotionProvider>
       </body>
     </html>
   );
