@@ -66,12 +66,19 @@ create table if not exists public.admins (
 
 alter table public.admins enable row level security;
 
--- Nobody reads/writes this table over the API — only via the SQL editor
--- (service role bypasses RLS anyway) and the is_admin() function below,
--- which runs as the function owner (security definer) rather than the
--- calling user, so it does not itself require a policy to succeed.
-create policy "No client access to admins" on public.admins
+-- No client can list/write this table — only via the SQL editor (service
+-- role bypasses RLS anyway) and the is_admin() function below, which runs
+-- as the function owner (security definer), so it doesn't need a policy.
+-- The one exception: a logged-in user is allowed to read their OWN row,
+-- because the app's sign-in flow checks membership by querying this table
+-- directly (not through is_admin()) to show an immediate "no access"
+-- message. `auth.uid() = user_id` means this can only ever reveal whether
+-- the caller's own id is present — never any other admin's row.
+create policy "No client writes to admins" on public.admins
   for all to anon, authenticated using (false) with check (false);
+
+create policy "Users can check their own admin row" on public.admins
+  for select to authenticated using ((select auth.uid()) = user_id);
 
 create or replace function public.is_admin()
 returns boolean
