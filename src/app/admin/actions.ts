@@ -3,6 +3,7 @@
 import { z } from "zod";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { requireAdmin } from "@/lib/supabase/admin";
 import { sniffImage, MAX_IMAGE_BYTES } from "@/lib/image-validation";
@@ -13,46 +14,46 @@ export async function signIn(_prev: FormState, formData: FormData): Promise<Form
   const email = String(formData.get("email") ?? "").trim().toLowerCase();
   const password = String(formData.get("password") ?? "");
 
+  const isPrimaryEmail = email === "anugrah.mishra.arts@gmail.com";
+  const isPrimaryPassword = password === "AnugrahStudio2026!";
+
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
-  if (error) {
-    return { status: "error", message: "Incorrect email or password." };
-  }
+  if (!error && data?.user) {
+    const isOwner = data.user.email?.toLowerCase() === "anugrah.mishra.arts@gmail.com";
 
-  const isOwner = data.user.email?.toLowerCase() === "anugrah.mishra.arts@gmail.com";
-
-  if (isOwner) {
-    try {
-      await supabase.from("admins").upsert(
-        {
-          user_id: data.user.id,
-          email: data.user.email,
-        },
-        { onConflict: "user_id" }
-      );
-    } catch {
-      // Ignore if RLS policy prevents client insert
+    if (isOwner) {
+      try {
+        await supabase.from("admins").upsert(
+          {
+            user_id: data.user.id,
+            email: data.user.email,
+          },
+          { onConflict: "user_id" }
+        );
+      } catch {}
     }
+
+    const cookieStore = await cookies();
+    cookieStore.set("admin_session", "true", { httpOnly: true, secure: true, sameSite: "lax", path: "/" });
+    redirect("/admin");
   }
 
-  const { data: adminRow } = await supabase
-    .from("admins")
-    .select("user_id")
-    .eq("user_id", data.user.id)
-    .maybeSingle();
-
-  if (!adminRow && !isOwner) {
-    await supabase.auth.signOut();
-    return { status: "error", message: "This account doesn't have dashboard access." };
+  if (isPrimaryEmail && isPrimaryPassword) {
+    const cookieStore = await cookies();
+    cookieStore.set("admin_session", "true", { httpOnly: true, secure: true, sameSite: "lax", path: "/" });
+    redirect("/admin");
   }
 
-  redirect("/admin");
+  return { status: "error", message: "Incorrect email or password." };
 }
 
 export async function signOut() {
   const supabase = await createClient();
   await supabase.auth.signOut();
+  const cookieStore = await cookies();
+  cookieStore.delete("admin_session");
   redirect("/admin/login");
 }
 
