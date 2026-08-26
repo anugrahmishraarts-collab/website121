@@ -27,12 +27,25 @@ const workSans = Work_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://inquisitivearts.com"),
   title: {
     default: "Inquisitive Arts — Anugrah Mishra, Contemporary Painter",
     template: "%s — Inquisitive Arts",
   },
   description:
     "The studio and gallery of Anugrah Mishra, a London-based contemporary painter exploring displacement, memory and stillness. Winner of the Freelands Painting Prize 2024.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "192x192" },
+    ],
+    apple: [{ url: "/icon.png", sizes: "192x192", type: "image/png" }],
+  },
+  openGraph: {
+    title: "Inquisitive Arts — Anugrah Mishra",
+    description: "The studio and gallery of Anugrah Mishra, a London-based contemporary painter.",
+    images: [{ url: "/logo-original.png", width: 898, height: 1024, alt: "Inquisitive Arts Logo" }],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

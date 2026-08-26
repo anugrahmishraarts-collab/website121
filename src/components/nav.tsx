@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
@@ -46,14 +47,24 @@ export function Nav() {
         <Link
           href="/"
           transitionTypes={pathname === "/" ? [] : ["nav-back"]}
-          className="group font-display text-lg tracking-tight text-paper"
+          className="group flex items-center gap-3 font-display text-lg tracking-tight text-paper"
         >
-          <span className="inline-block transition-transform duration-500 [transition-timing-function:var(--ease-spring)] group-hover:-translate-y-[1px]">
-            Inquisitive Arts
-          </span>
-          <span className="block font-ui text-[10px] tracking-[0.2em] uppercase text-muted mt-0.5">
-            Anugrah Mishra
-          </span>
+          <Image
+            src="/logo-transparent.png"
+            alt="Inquisitive Arts Logo"
+            width={48}
+            height={48}
+            className="h-11 w-auto object-contain transition-transform duration-500 [transition-timing-function:var(--ease-spring)] group-hover:scale-105"
+            priority
+          />
+          <div>
+            <span className="block font-display text-lg leading-tight tracking-tight text-paper transition-transform duration-500 [transition-timing-function:var(--ease-spring)] group-hover:-translate-y-[1px]">
+              Inquisitive Arts
+            </span>
+            <span className="block font-ui text-[10px] tracking-[0.2em] uppercase text-muted mt-0.5">
+              Anugrah Mishra
+            </span>
+          </div>
         </Link>
 
         <ul className="hidden md:flex items-center gap-2 font-ui text-sm">

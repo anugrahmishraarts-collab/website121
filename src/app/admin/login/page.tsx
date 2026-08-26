@@ -1,11 +1,19 @@
+import Image from "next/image";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { LoginForm } from "./login-form";
 
 export default function AdminLoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-ink px-6">
-      <div className="w-full max-w-sm">
-        <p className="eyebrow mb-3 text-center">Inquisitive Arts</p>
+      <div className="w-full max-w-sm flex flex-col items-center">
+        <Image
+          src="/logo-transparent.png"
+          alt="Inquisitive Arts Logo"
+          width={64}
+          height={64}
+          className="h-16 w-auto object-contain mb-4"
+        />
+        <p className="eyebrow mb-2 text-center">Inquisitive Arts</p>
         <h1 className="font-display text-3xl text-paper text-center mb-10">Studio sign in</h1>
 
         {isSupabaseConfigured() ? (

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 export function Footer() {
@@ -10,11 +11,20 @@ export function Footer() {
   return (
     <footer className="border-t border-line mt-32">
       <div className="container-gallery py-16 grid gap-12 md:grid-cols-3">
-        <div>
-          <p className="font-display text-xl text-paper">Inquisitive Arts</p>
-          <p className="font-body text-sm text-muted mt-3 max-w-xs leading-relaxed">
-            The studio and gallery of Anugrah Mishra — contemporary painter, London.
-          </p>
+        <div className="flex items-start gap-4">
+          <Image
+            src="/logo-transparent.png"
+            alt="Inquisitive Arts Logo"
+            width={56}
+            height={56}
+            className="h-14 w-auto object-contain shrink-0 mt-0.5"
+          />
+          <div>
+            <p className="font-display text-xl text-paper">Inquisitive Arts</p>
+            <p className="font-body text-sm text-muted mt-2 max-w-xs leading-relaxed">
+              The studio and gallery of Anugrah Mishra — contemporary painter, London.
+            </p>
+          </div>
         </div>
 
         <div className="font-ui text-sm">
