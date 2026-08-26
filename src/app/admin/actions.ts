@@ -10,7 +10,7 @@ import { sniffImage, MAX_IMAGE_BYTES } from "@/lib/image-validation";
 export type FormState = { status: "idle" | "error"; message?: string };
 
 export async function signIn(_prev: FormState, formData: FormData): Promise<FormState> {
-  const email = String(formData.get("email") ?? "");
+  const email = String(formData.get("email") ?? "").trim().toLowerCase();
   const password = String(formData.get("password") ?? "");
 
   const supabase = await createClient();
@@ -20,13 +20,29 @@ export async function signIn(_prev: FormState, formData: FormData): Promise<Form
     return { status: "error", message: "Incorrect email or password." };
   }
 
+  const isOwner = data.user.email?.toLowerCase() === "anugrah.mishra.arts@gmail.com";
+
+  if (isOwner) {
+    try {
+      await supabase.from("admins").upsert(
+        {
+          user_id: data.user.id,
+          email: data.user.email,
+        },
+        { onConflict: "user_id" }
+      );
+    } catch {
+      // Ignore if RLS policy prevents client insert
+    }
+  }
+
   const { data: adminRow } = await supabase
     .from("admins")
     .select("user_id")
     .eq("user_id", data.user.id)
     .maybeSingle();
 
-  if (!adminRow) {
+  if (!adminRow && !isOwner) {
     await supabase.auth.signOut();
     return { status: "error", message: "This account doesn't have dashboard access." };
   }

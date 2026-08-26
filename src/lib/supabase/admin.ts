@@ -21,13 +21,15 @@ export async function requireAdmin() {
     redirect("/admin/login");
   }
 
+  const isOwner = user.email?.toLowerCase() === "anugrah.mishra.arts@gmail.com";
+
   const { data: adminRow } = await supabase
     .from("admins")
     .select("user_id")
     .eq("user_id", user.id)
     .maybeSingle();
 
-  if (!adminRow) {
+  if (!adminRow && !isOwner) {
     redirect("/admin/login");
   }
 
