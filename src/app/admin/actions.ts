@@ -3,7 +3,6 @@
 import { z } from "zod";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { requireAdmin } from "@/lib/supabase/admin";
 import { sniffImage, MAX_IMAGE_BYTES } from "@/lib/image-validation";
@@ -13,9 +12,6 @@ export type FormState = { status: "idle" | "error"; message?: string };
 export async function signIn(_prev: FormState, formData: FormData): Promise<FormState> {
   const email = String(formData.get("email") ?? "").trim().toLowerCase();
   const password = String(formData.get("password") ?? "");
-
-  const isPrimaryEmail = email === "anugrah.mishra.arts@gmail.com";
-  const isPrimaryPassword = password === "AnugrahStudio2026!";
 
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
@@ -35,14 +31,6 @@ export async function signIn(_prev: FormState, formData: FormData): Promise<Form
       } catch {}
     }
 
-    const cookieStore = await cookies();
-    cookieStore.set("admin_session", "true", { httpOnly: true, secure: true, sameSite: "lax", path: "/" });
-    redirect("/admin");
-  }
-
-  if (isPrimaryEmail && isPrimaryPassword) {
-    const cookieStore = await cookies();
-    cookieStore.set("admin_session", "true", { httpOnly: true, secure: true, sameSite: "lax", path: "/" });
     redirect("/admin");
   }
 
@@ -52,8 +40,6 @@ export async function signIn(_prev: FormState, formData: FormData): Promise<Form
 export async function signOut() {
   const supabase = await createClient();
   await supabase.auth.signOut();
-  const cookieStore = await cookies();
-  cookieStore.delete("admin_session");
   redirect("/admin/login");
 }
 

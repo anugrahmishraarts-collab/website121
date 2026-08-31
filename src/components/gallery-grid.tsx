@@ -46,7 +46,7 @@ export function GalleryGrid({ artworks }: { artworks: Artwork[] }) {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-14">
           {filtered.map((artwork, i) => (
             <Reveal key={artwork.id} delay={(i % 3) * 0.06}>
-              <ArtworkCard artwork={artwork} />
+              <ArtworkCard artwork={artwork} priority={i < 3} />
             </Reveal>
           ))}
         </div>

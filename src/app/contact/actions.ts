@@ -17,6 +17,8 @@ export type InquiryState = {
   message?: string;
 };
 
+const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
 export async function submitInquiry(
   _prev: InquiryState,
   formData: FormData
@@ -37,6 +39,7 @@ export async function submitInquiry(
 
   const { name, email, message, artworkSlug } = parsed.data;
   const artwork = artworkSlug ? await getArtworkBySlug(artworkSlug) : null;
+  const artworkId = artwork?.id && uuidPattern.test(artwork.id) ? artwork.id : null;
 
   if (!isSupabaseConfigured()) {
     console.log("New inquiry (Supabase not connected — logged only):", {
@@ -56,7 +59,7 @@ export async function submitInquiry(
     name,
     email,
     message,
-    artwork_id: artwork?.id ?? null,
+    artwork_id: artworkId,
     artwork_title: artwork?.title ?? null,
   });
 

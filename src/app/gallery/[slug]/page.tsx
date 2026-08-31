@@ -8,7 +8,7 @@ import { Reveal } from "@/components/reveal";
 import { ArtworkPlaceholder } from "@/components/artwork-placeholder";
 import { ArtworkCard } from "@/components/artwork-card";
 import { PageTransition } from "@/components/page-transition";
-import { getArtworkBySlug, getArtworks } from "@/lib/data";
+import { getArtworkBySlug, getPublicArtworks } from "@/lib/data";
 
 type Params = Promise<{ slug: string }>;
 
@@ -27,7 +27,7 @@ export default async function ArtworkPage({ params }: { params: Params }) {
   const artwork = await getArtworkBySlug(slug);
   if (!artwork) notFound();
 
-  const all = await getArtworks();
+  const all = await getPublicArtworks();
   const more = all.filter((a) => a.slug !== artwork.slug).slice(0, 3);
 
   const statusLabel =
@@ -55,8 +55,8 @@ export default async function ArtworkPage({ params }: { params: Params }) {
                   src={artwork.image_url}
                   alt={artwork.title}
                   fill
-                  priority
-                  className="object-cover"
+                  preload
+                  className="object-contain"
                   sizes="(min-width: 1024px) 55vw, 90vw"
                 />
               ) : (

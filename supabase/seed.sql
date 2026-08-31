@@ -2,34 +2,47 @@
 -- content whether or not Supabase is connected yet.
 -- Run after 0001_init.sql. Safe to re-run (upserts on slug).
 
-insert into public.artworks (slug, title, year, medium, dimensions, description, status, collection, featured, sort_order, placeholder_tone)
+insert into public.artworks (slug, title, year, medium, dimensions, description, status, collection, image_url, featured, sort_order, placeholder_tone)
 values
-  ('charlie-chaplin', 'Charlie Chaplin', '2023', 'Oil on canvas', '16 x 20 in',
-   'A layered portrait study built from memory rather than photograph — Chaplin rendered less as icon than as a study in stillness, holding the same quiet the artist returns to across his interiors and figures.',
-   'inquire', 'Portraits', true, 0, 'ink'),
+  ('the-unseen-guide', 'The Unseen Guide', '2026', 'Acrylic and oil on canvas', '156 × 170 cm',
+   'The Krishna archetype becomes a psychological presence rather than a literal religious figure. An open chest, a barren tree and a luminous atmosphere suggest memory, inheritance and the quiet forms of guidance that remain when the external world offers no clear direction.',
+   'inquire', 'Refugee Crisis Series', '/artworks/the-unseen-guide.webp', true, 0, 'slate'),
 
-  ('landscape-i', 'Landscape I', '2023', 'Watercolour on canvas', '16 x 24 in',
-   'The first of a two-part study in atmosphere — delicate brushwork and subtle colour transitions building a landscape that reads as memory as much as place.',
-   'inquire', 'Landscapes', false, 1, 'slate'),
+  ('stolen-home', 'Stolen Home — Sita Archetype', '2026', 'Acrylic and oil on canvas', '155 × 170 cm',
+   'The Sita archetype becomes a framework for displacement, protection and the wound of separation from home. The seated figure, charged boundary and unstable atmosphere hold vulnerability, endurance and the fragile persistence of dignity.',
+   'inquire', 'Refugee Crisis Series', '/artworks/stolen-home.webp', true, 1, 'ember'),
 
-  ('landscape-ii', 'Landscape II', '2023', 'Watercolour on canvas', '16 x 24 in',
-   'This exquisite watercolour landscape captures serene natural beauty with delicate brushwork and subtle colour transitions. Printed on high-quality canvas, it offers a textured, gallery-ready finish that enhances the work''s depth and vibrancy — hand-stretched over solid wood stretcher bars with a matt finish coating.',
-   'inquire', 'Landscapes', false, 2, 'slate'),
+  ('moral-integrity', 'Moral Integrity — Rama Archetype', '2026', 'Acrylic and oil on canvas', '155 × 170 cm',
+   'A solitary figure moves through an uncertain threshold while fading footsteps, shadow and an abandoned chair turn exile into an ethical passage. The work considers the quiet strength required to preserve dignity and direction under pressure.',
+   'inquire', 'Refugee Crisis Series', '/artworks/moral-integrity.webp', false, 2, 'ink'),
 
-  ('mother-teresa', 'Mother Teresa', '2023', 'Oil on canvas', '16 x 20 in',
-   'A restrained, devotional portrait — part of an ongoing interest in figures who carry public weight, painted with the same interiority the artist brings to his refugee-crisis work.',
-   'inquire', 'Portraits', true, 3, 'ink'),
+  ('resilience-and-dreams', 'Resilience and Dreams', '2024', 'Acrylic and oil on canvas', '200 × 250 cm',
+   'Hope is placed under pressure inside an unstable interior. A window, cage, chain, figures and architectural fragments hold the possibility of future life within the material and psychological conditions of confinement and loss.',
+   'inquire', 'Refugee Crisis Series', '/artworks/resilience-and-dreams.webp', true, 3, 'ink'),
 
-  ('untitled-i', 'Untitled Work I', '2023', 'Oil and acrylic on canvas', 'TBC',
-   'Placeholder entry — title, medium and description to be confirmed and updated via the admin dashboard once the original listing is recovered.',
-   'inquire', 'Studies', false, 4, 'ember'),
+  ('resettlement', 'Resettlement', '2024', 'Acrylic and oil on canvas', '160 × 170 cm',
+   'An emptied room becomes a psychological site of arrival. Clothing, worn surfaces, light and silence suggest how displacement continues inside domestic space, where physical safety may return before a sense of belonging does.',
+   'inquire', 'Refugee Crisis Series', '/artworks/resettlement.webp', false, 4, 'slate'),
 
-  ('untitled-ii', 'Untitled Work II', '2023', 'Oil and acrylic on canvas', 'TBC',
-   'Placeholder entry — title, medium and description to be confirmed and updated via the admin dashboard once the original listing is recovered.',
-   'inquire', 'Studies', false, 5, 'ember')
+  ('loss-and-trauma', 'Loss and Trauma', '2024', 'Acrylic and oil on canvas', '155 × 170 cm',
+   'Two figures are held inside a dark and unstable psychological environment. Concealed faces, compressed posture and surrounding forms shift attention from a single political event to the exhaustion, memory and inner rupture carried after displacement.',
+   'inquire', 'Refugee Crisis Series', '/artworks/loss-and-trauma.webp', false, 5, 'ember'),
+
+  ('isolation', 'Isolation', '2025', 'Acrylic and charcoal on canvas', '155 × 170 cm',
+   'A silhouetted figure is compressed inside a field of pressured yellow light and darkness. The painting gives form to psychological enclosure, turning isolation into a bodily and atmospheric condition rather than a simple absence of company.',
+   'inquire', 'Refugee Crisis Series', '/artworks/isolation.webp', false, 6, 'ember')
 on conflict (slug) do update set
   title = excluded.title,
-  description = excluded.description;
+  year = excluded.year,
+  medium = excluded.medium,
+  dimensions = excluded.dimensions,
+  description = excluded.description,
+  status = excluded.status,
+  collection = excluded.collection,
+  image_url = excluded.image_url,
+  featured = excluded.featured,
+  sort_order = excluded.sort_order,
+  placeholder_tone = excluded.placeholder_tone;
 
 insert into public.press_features (title, publication, url, excerpt, sort_order)
 values

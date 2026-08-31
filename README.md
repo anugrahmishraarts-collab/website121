@@ -39,8 +39,8 @@ login form.
 4. In the Supabase SQL Editor, run `supabase/migrations/0001_init.sql`, then
    `supabase/seed.sql` — this creates the `artworks`, `press_features`,
    `inquiries` and `admins` tables (with row-level security policies) and a
-   public `artwork-images` storage bucket, then seeds it with the same six
-   artworks and press features already on the site.
+   public `artwork-images` storage bucket, then seeds it with the selected
+   refugee-crisis series and press features already on the site.
 5. In **Authentication → Providers → Email**, turn **off** "Allow new users
    to sign up." This is a single-admin site — the only account should be the
    one you create next, not anyone who finds the login page.
@@ -86,14 +86,10 @@ to live Supabase data — no code changes needed.
   mural at Jesus Green Lido are all sourced from public press coverage (AATONAU,
   Cambridge Independent, Cambridge City Council, Saatchi Art, Anglia Ruskin) —
   see the links on the `/journal` page.
-- Four of the six seeded artworks (`Charlie Chaplin`, `Landscape I`,
-  `Landscape II`, `Mother Teresa`) carry titles and, for Landscape II, the
-  exact description from the original store. The other two are placeholders
-  (`Untitled Work I` / `II`) — the original Shopify site was rate-limiting
-  requests when this was built, so two product listings couldn't be recovered.
-  Rename/rewrite them from `/admin` once connected.
-- All artwork photography is currently a generated placeholder tile — swap in
-  real images per piece from `/admin/artworks`.
+- The public gallery ships with seven completed works from the refugee-crisis
+  series and their web-optimised images. CMS records with matching slugs can
+  override this canonical metadata, while newly added non-legacy works continue
+  to appear after the series.
 - Logo: not yet added. Drop a real logomark into `src/app/layout.tsx` /
   `src/components/nav.tsx` when it's ready; the wordmark is a plain text
   placeholder for now.

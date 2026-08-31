@@ -1,11 +1,9 @@
-// Seed content for Inquisitive Arts rebuild.
+// Canonical public content for Inquisitive Arts.
 // Bio + mural + press facts sourced from: AATONAU interview ("Between Stillness and
 // Survival"), Cambridge Independent, Cambridge City Council news, Anglia Ruskin
 // Creative Showcase, Saatchi Art artist profile, Freelands Foundation / ArtRabbit.
-// Artwork titles "Charlie Chaplin", "Landscape I", "Landscape II", "Mother Teresa" are
-// carried over from the live inquisitivearts.com store. Two of the six product slugs
-// (canvas, canvas-3 or canvas-4) could not be matched to a title before the old site's
-// rate limit kicked in, so two entries below are placeholders — rename via /admin.
+// The artwork entries below are the completed works currently selected from Anugrah
+// Mishra's ongoing refugee-crisis series.
 
 export type Artwork = {
   slug: string;
@@ -16,86 +14,107 @@ export type Artwork = {
   description: string;
   status: "available" | "inquire" | "sold";
   collection: string;
+  imageUrl: string;
   featured: boolean;
   placeholderTone: "ember" | "slate" | "ink";
 };
 
 export const artworks: Artwork[] = [
   {
-    slug: "charlie-chaplin",
-    title: "Charlie Chaplin",
-    year: "2023",
-    medium: "Oil on canvas",
-    dimensions: "16 × 20 in",
+    slug: "the-unseen-guide",
+    title: "The Unseen Guide",
+    year: "2026",
+    medium: "Acrylic and oil on canvas",
+    dimensions: "156 × 170 cm",
     description:
-      "A layered portrait study built from memory rather than photograph — Chaplin rendered less as icon than as a study in stillness, holding the same quiet the artist returns to across his interiors and figures.",
+      "The Krishna archetype becomes a psychological presence rather than a literal religious figure. An open chest, a barren tree and a luminous atmosphere suggest memory, inheritance and the quiet forms of guidance that remain when the external world offers no clear direction.",
     status: "inquire",
-    collection: "Portraits",
+    collection: "Refugee Crisis Series",
+    imageUrl: "/artworks/the-unseen-guide.webp",
+    featured: true,
+    placeholderTone: "slate",
+  },
+  {
+    slug: "stolen-home",
+    title: "Stolen Home — Sita Archetype",
+    year: "2026",
+    medium: "Acrylic and oil on canvas",
+    dimensions: "155 × 170 cm",
+    description:
+      "The Sita archetype becomes a framework for displacement, protection and the wound of separation from home. The seated figure, charged boundary and unstable atmosphere hold vulnerability, endurance and the fragile persistence of dignity.",
+    status: "inquire",
+    collection: "Refugee Crisis Series",
+    imageUrl: "/artworks/stolen-home.webp",
+    featured: true,
+    placeholderTone: "ember",
+  },
+  {
+    slug: "moral-integrity",
+    title: "Moral Integrity — Rama Archetype",
+    year: "2026",
+    medium: "Acrylic and oil on canvas",
+    dimensions: "155 × 170 cm",
+    description:
+      "A solitary figure moves through an uncertain threshold while fading footsteps, shadow and an abandoned chair turn exile into an ethical passage. The work considers the quiet strength required to preserve dignity and direction under pressure.",
+    status: "inquire",
+    collection: "Refugee Crisis Series",
+    imageUrl: "/artworks/moral-integrity.webp",
+    featured: false,
+    placeholderTone: "ink",
+  },
+  {
+    slug: "resilience-and-dreams",
+    title: "Resilience and Dreams",
+    year: "2024",
+    medium: "Acrylic and oil on canvas",
+    dimensions: "200 × 250 cm",
+    description:
+      "Hope is placed under pressure inside an unstable interior. A window, cage, chain, figures and architectural fragments hold the possibility of future life within the material and psychological conditions of confinement and loss.",
+    status: "inquire",
+    collection: "Refugee Crisis Series",
+    imageUrl: "/artworks/resilience-and-dreams.webp",
     featured: true,
     placeholderTone: "ink",
   },
   {
-    slug: "landscape-i",
-    title: "Landscape I",
-    year: "2023",
-    medium: "Watercolour on canvas",
-    dimensions: "16 × 24 in",
+    slug: "resettlement",
+    title: "Resettlement",
+    year: "2024",
+    medium: "Acrylic and oil on canvas",
+    dimensions: "160 × 170 cm",
     description:
-      "The first of a two-part study in atmosphere — delicate brushwork and subtle colour transitions building a landscape that reads as memory as much as place.",
+      "An emptied room becomes a psychological site of arrival. Clothing, worn surfaces, light and silence suggest how displacement continues inside domestic space, where physical safety may return before a sense of belonging does.",
     status: "inquire",
-    collection: "Landscapes",
+    collection: "Refugee Crisis Series",
+    imageUrl: "/artworks/resettlement.webp",
     featured: false,
     placeholderTone: "slate",
   },
   {
-    slug: "landscape-ii",
-    title: "Landscape II",
-    year: "2023",
-    medium: "Watercolour on canvas",
-    dimensions: "16 × 24 in",
+    slug: "loss-and-trauma",
+    title: "Loss and Trauma",
+    year: "2024",
+    medium: "Acrylic and oil on canvas",
+    dimensions: "155 × 170 cm",
     description:
-      "This exquisite watercolour landscape captures serene natural beauty with delicate brushwork and subtle colour transitions. Printed on high-quality canvas, it offers a textured, gallery-ready finish that enhances the work's depth and vibrancy — hand-stretched over solid wood stretcher bars with a matt finish coating.",
+      "Two figures are held inside a dark and unstable psychological environment. Concealed faces, compressed posture and surrounding forms shift attention from a single political event to the exhaustion, memory and inner rupture carried after displacement.",
     status: "inquire",
-    collection: "Landscapes",
-    featured: false,
-    placeholderTone: "slate",
-  },
-  {
-    slug: "mother-teresa",
-    title: "Mother Teresa",
-    year: "2023",
-    medium: "Oil on canvas",
-    dimensions: "16 × 20 in",
-    description:
-      "A restrained, devotional portrait — part of an ongoing interest in figures who carry public weight, painted with the same interiority the artist brings to his refugee-crisis work.",
-    status: "inquire",
-    collection: "Portraits",
-    featured: true,
-    placeholderTone: "ink",
-  },
-  {
-    slug: "untitled-i",
-    title: "Untitled Work I",
-    year: "2023",
-    medium: "Oil and acrylic on canvas",
-    dimensions: "TBC",
-    description:
-      "Placeholder entry — title, medium and description to be confirmed and updated via the admin dashboard once the original listing is recovered.",
-    status: "inquire",
-    collection: "Studies",
+    collection: "Refugee Crisis Series",
+    imageUrl: "/artworks/loss-and-trauma.webp",
     featured: false,
     placeholderTone: "ember",
   },
   {
-    slug: "untitled-ii",
-    title: "Untitled Work II",
-    year: "2023",
-    medium: "Oil and acrylic on canvas",
-    dimensions: "TBC",
+    slug: "isolation",
+    title: "Isolation",
+    year: "2025",
+    medium: "Acrylic and charcoal on canvas",
+    dimensions: "155 × 170 cm",
     description:
-      "Placeholder entry — title, medium and description to be confirmed and updated via the admin dashboard once the original listing is recovered.",
+      "A silhouetted figure is compressed inside a field of pressured yellow light and darkness. The painting gives form to psychological enclosure, turning isolation into a bodily and atmospheric condition rather than a simple absence of company.",
     status: "inquire",
-    collection: "Studies",
+    collection: "Refugee Crisis Series",
+    imageUrl: "/artworks/isolation.webp",
     featured: false,
     placeholderTone: "ember",
   },
