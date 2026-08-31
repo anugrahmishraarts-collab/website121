@@ -30,7 +30,43 @@ values
 
   ('isolation', 'Isolation', '2025', 'Acrylic and charcoal on canvas', '155 × 170 cm',
    'A silhouetted figure is compressed inside a field of pressured yellow light and darkness. The painting gives form to psychological enclosure, turning isolation into a bodily and atmospheric condition rather than a simple absence of company.',
-   'inquire', 'Refugee Crisis Series', '/artworks/isolation.webp', false, 6, 'ember')
+   'inquire', 'Refugee Crisis Series', '/artworks/isolation.webp', false, 6, 'ember'),
+
+  ('charlie-chaplin', 'Charlie Chaplin', '2018', 'Ink and wash', '16 × 20 in',
+   'A high-contrast monochrome portrait that captures Chaplin through concentrated shadow, expressive brushwork and the unmistakable geometry of his screen persona.',
+   'inquire', 'Portraits', '/artworks/charlie-chaplin.webp', false, 100, 'ink'),
+
+  ('mother-teresa', 'Mother Teresa', '2019', 'Watercolour', '16 × 20 in',
+   'A contemplative profile with hands joined in prayer. Soft washes and restrained colour place emphasis on the sitter''s stillness, humility and inward attention.',
+   'inquire', 'Portraits', '/artworks/mother-teresa.webp', false, 101, 'slate'),
+
+  ('sherlock-holmes', 'Sherlock Holmes — The Violinist', '2019', 'Acrylic on canvas', 'TBC',
+   'Sherlock Holmes is presented through his violin, emerging from a dark interior of saturated red, amber and black. The instrument becomes both clue and psychological portrait.',
+   'inquire', 'Portraits', '/artworks/sherlock-holmes.webp', false, 102, 'ember'),
+
+  ('riverside-settlement', 'Riverside Settlement', null, 'Watercolour and ink', '16 × 24 in',
+   'A cluster of corrugated roofs and a moored boat are assembled through quick washes and dark structural marks, balancing domestic shelter with the movement of water.',
+   'inquire', 'Landscapes', '/artworks/riverside-settlement.webp', false, 103, 'slate'),
+
+  ('the-flux', 'The Flux', '2017', 'Oil on canvas', 'TBC',
+   'A wide waterfall fills the composition with repeated vertical currents. Cool blues and luminous white turn falling water into a study of continuous movement and change.',
+   'inquire', 'Landscapes', '/artworks/the-flux.webp', false, 104, 'slate'),
+
+  ('house-by-the-water', 'House by the Water', '2017', 'Watercolour', '16 × 24 in',
+   'A bright house and its reflection anchor a quiet waterside landscape. Open paper, translucent colour and broken reflections create an atmosphere of calm and distance.',
+   'inquire', 'Landscapes', '/artworks/house-by-the-water.webp', false, 105, 'slate'),
+
+  ('still-life-with-bottles', 'Still Life with Bottles', '2020', 'Mixed media', 'TBC',
+   'Glass bottles and preserving jars are arranged against a deep black field. Reflections, lettering and changes of scale turn familiar containers into a study of transparency and weight.',
+   'inquire', 'Studies', '/artworks/still-life-with-bottles.webp', false, 106, 'ink'),
+
+  ('the-lesson', 'The Lesson', null, 'Ink on paper', 'TBC',
+   'A densely worked interior brings three figures together through costume, gesture and an array of surrounding objects. Precise line and cross-hatching give the scene a theatrical, narrative tension.',
+   'inquire', 'Studies', '/artworks/the-lesson.webp', false, 107, 'ink'),
+
+  ('figure-in-motion', 'Figure in Motion', null, 'Acrylic on canvas', 'TBC',
+   'A bent figure emerges from sweeping arcs of gold, white and blue. Thick impasto and circular movement hold the body between physical effort, vulnerability and momentum.',
+   'inquire', 'Studies', '/artworks/figure-in-motion.webp', false, 108, 'ember')
 on conflict (slug) do update set
   title = excluded.title,
   year = excluded.year,

@@ -2,8 +2,8 @@
 // Bio + mural + press facts sourced from: AATONAU interview ("Between Stillness and
 // Survival"), Cambridge Independent, Cambridge City Council news, Anglia Ruskin
 // Creative Showcase, Saatchi Art artist profile, Freelands Foundation / ArtRabbit.
-// The artwork entries below are the completed works currently selected from Anugrah
-// Mishra's ongoing refugee-crisis series.
+// The artwork entries below include Anugrah Mishra's ongoing refugee-crisis series
+// and a selected group of earlier portraits, landscapes and studies.
 
 export type Artwork = {
   slug: string;
@@ -115,6 +115,132 @@ export const artworks: Artwork[] = [
     status: "inquire",
     collection: "Refugee Crisis Series",
     imageUrl: "/artworks/isolation.webp",
+    featured: false,
+    placeholderTone: "ember",
+  },
+  {
+    slug: "charlie-chaplin",
+    title: "Charlie Chaplin",
+    year: "2018",
+    medium: "Ink and wash",
+    dimensions: "16 × 20 in",
+    description:
+      "A high-contrast monochrome portrait that captures Chaplin through concentrated shadow, expressive brushwork and the unmistakable geometry of his screen persona.",
+    status: "inquire",
+    collection: "Portraits",
+    imageUrl: "/artworks/charlie-chaplin.webp",
+    featured: false,
+    placeholderTone: "ink",
+  },
+  {
+    slug: "mother-teresa",
+    title: "Mother Teresa",
+    year: "2019",
+    medium: "Watercolour",
+    dimensions: "16 × 20 in",
+    description:
+      "A contemplative profile with hands joined in prayer. Soft washes and restrained colour place emphasis on the sitter's stillness, humility and inward attention.",
+    status: "inquire",
+    collection: "Portraits",
+    imageUrl: "/artworks/mother-teresa.webp",
+    featured: false,
+    placeholderTone: "slate",
+  },
+  {
+    slug: "sherlock-holmes",
+    title: "Sherlock Holmes — The Violinist",
+    year: "2019",
+    medium: "Acrylic on canvas",
+    dimensions: "TBC",
+    description:
+      "Sherlock Holmes is presented through his violin, emerging from a dark interior of saturated red, amber and black. The instrument becomes both clue and psychological portrait.",
+    status: "inquire",
+    collection: "Portraits",
+    imageUrl: "/artworks/sherlock-holmes.webp",
+    featured: false,
+    placeholderTone: "ember",
+  },
+  {
+    slug: "riverside-settlement",
+    title: "Riverside Settlement",
+    year: "",
+    medium: "Watercolour and ink",
+    dimensions: "16 × 24 in",
+    description:
+      "A cluster of corrugated roofs and a moored boat are assembled through quick washes and dark structural marks, balancing domestic shelter with the movement of water.",
+    status: "inquire",
+    collection: "Landscapes",
+    imageUrl: "/artworks/riverside-settlement.webp",
+    featured: false,
+    placeholderTone: "slate",
+  },
+  {
+    slug: "the-flux",
+    title: "The Flux",
+    year: "2017",
+    medium: "Oil on canvas",
+    dimensions: "TBC",
+    description:
+      "A wide waterfall fills the composition with repeated vertical currents. Cool blues and luminous white turn falling water into a study of continuous movement and change.",
+    status: "inquire",
+    collection: "Landscapes",
+    imageUrl: "/artworks/the-flux.webp",
+    featured: false,
+    placeholderTone: "slate",
+  },
+  {
+    slug: "house-by-the-water",
+    title: "House by the Water",
+    year: "2017",
+    medium: "Watercolour",
+    dimensions: "16 × 24 in",
+    description:
+      "A bright house and its reflection anchor a quiet waterside landscape. Open paper, translucent colour and broken reflections create an atmosphere of calm and distance.",
+    status: "inquire",
+    collection: "Landscapes",
+    imageUrl: "/artworks/house-by-the-water.webp",
+    featured: false,
+    placeholderTone: "slate",
+  },
+  {
+    slug: "still-life-with-bottles",
+    title: "Still Life with Bottles",
+    year: "2020",
+    medium: "Mixed media",
+    dimensions: "TBC",
+    description:
+      "Glass bottles and preserving jars are arranged against a deep black field. Reflections, lettering and changes of scale turn familiar containers into a study of transparency and weight.",
+    status: "inquire",
+    collection: "Studies",
+    imageUrl: "/artworks/still-life-with-bottles.webp",
+    featured: false,
+    placeholderTone: "ink",
+  },
+  {
+    slug: "the-lesson",
+    title: "The Lesson",
+    year: "",
+    medium: "Ink on paper",
+    dimensions: "TBC",
+    description:
+      "A densely worked interior brings three figures together through costume, gesture and an array of surrounding objects. Precise line and cross-hatching give the scene a theatrical, narrative tension.",
+    status: "inquire",
+    collection: "Studies",
+    imageUrl: "/artworks/the-lesson.webp",
+    featured: false,
+    placeholderTone: "ink",
+  },
+  {
+    slug: "figure-in-motion",
+    title: "Figure in Motion",
+    year: "",
+    medium: "Acrylic on canvas",
+    dimensions: "TBC",
+    description:
+      "A bent figure emerges from sweeping arcs of gold, white and blue. Thick impasto and circular movement hold the body between physical effort, vulnerability and momentum.",
+    status: "inquire",
+    collection: "Studies",
+    imageUrl: "/artworks/figure-in-motion.webp",
     featured: false,
     placeholderTone: "ember",
   },
