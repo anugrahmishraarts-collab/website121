@@ -22,15 +22,6 @@ function seedToArtwork(entry: (typeof seedArtworks)[number], index: number): Art
   };
 }
 
-const legacyPlaceholderSlugs = new Set([
-  "charlie-chaplin",
-  "landscape-i",
-  "landscape-ii",
-  "mother-teresa",
-  "untitled-i",
-  "untitled-ii",
-]);
-
 function getCanonicalArtworks() {
   return seedArtworks.map(seedToArtwork).sort((a, b) => a.sort_order - b.sort_order);
 }
@@ -84,11 +75,7 @@ export async function getPublicArtworks(): Promise<Artwork[]> {
   });
 
   const additionalWorks = cmsArtworks
-    .filter(
-      (artwork) =>
-        !canonicalSlugs.has(artwork.slug) &&
-        (!legacyPlaceholderSlugs.has(artwork.slug) || Boolean(artwork.image_url))
-    )
+    .filter((artwork) => !canonicalSlugs.has(artwork.slug))
     .sort((a, b) => a.sort_order - b.sort_order)
     .map((artwork, index) => ({
       ...artwork,
