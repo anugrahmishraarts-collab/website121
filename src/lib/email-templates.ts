@@ -1,5 +1,6 @@
 const SITE_URL = "https://www.inquisitivearts.com";
 const INSTAGRAM_URL = "https://www.instagram.com/inquisitive_artist_/";
+const LOGO_URL = `${SITE_URL}/icon.png`;
 
 type InquiryEmailDetails = {
   name: string;
@@ -33,8 +34,19 @@ function emailShell(preview: string, content: string) {
           <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:620px;background:#181d1f;border:1px solid #343a3c;">
             <tr>
               <td style="padding:30px 34px 20px;border-bottom:1px solid #343a3c;">
-                <p style="margin:0 0 6px;color:#d9845f;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">Inquisitive Arts</p>
-                <p style="margin:0;color:#ede9df;font-family:Georgia,serif;font-size:28px;line-height:1.2;">Anugrah Mishra</p>
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td width="84" valign="middle" style="width:84px;">
+                      <a href="${SITE_URL}" style="text-decoration:none;">
+                        <img src="${LOGO_URL}" width="72" height="72" alt="Inquisitive Arts" style="display:block;width:72px;height:72px;border:0;outline:none;text-decoration:none;">
+                      </a>
+                    </td>
+                    <td valign="middle" style="padding-left:16px;">
+                      <p style="margin:0 0 6px;color:#d9845f;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">Inquisitive Arts</p>
+                      <p style="margin:0;color:#ede9df;font-family:Georgia,serif;font-size:28px;line-height:1.2;">Anugrah Mishra</p>
+                    </td>
+                  </tr>
+                </table>
               </td>
             </tr>
             <tr>
