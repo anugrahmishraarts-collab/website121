@@ -26,6 +26,17 @@ export function ContactForm({
 
   return (
     <form action={formAction} className="space-y-6">
+      <div className="hidden" aria-hidden="true">
+        <label htmlFor="website">Website</label>
+        <input
+          id="website"
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
+
       {artworkSlug && (
         <>
           <input type="hidden" name="artworkSlug" value={artworkSlug} />
@@ -44,6 +55,8 @@ export function ContactForm({
           name="name"
           type="text"
           required
+          maxLength={120}
+          autoComplete="name"
           className="mt-2 w-full bg-transparent border-b border-line focus:border-ember-bright outline-none py-3 font-body text-paper placeholder:text-muted transition-colors"
           placeholder="Your name"
         />
@@ -58,6 +71,8 @@ export function ContactForm({
           name="email"
           type="email"
           required
+          maxLength={254}
+          autoComplete="email"
           className="mt-2 w-full bg-transparent border-b border-line focus:border-ember-bright outline-none py-3 font-body text-paper placeholder:text-muted transition-colors"
           placeholder="you@example.com"
         />
@@ -72,6 +87,7 @@ export function ContactForm({
           name="message"
           required
           rows={5}
+          maxLength={5000}
           className="mt-2 w-full bg-transparent border-b border-line focus:border-ember-bright outline-none py-3 font-body text-paper placeholder:text-muted transition-colors resize-none"
           placeholder={
             artworkTitle
