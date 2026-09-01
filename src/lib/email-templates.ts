@@ -102,18 +102,7 @@ export function buildStudioInquiryEmail({
   message,
   artworkTitle,
 }: InquiryEmailDetails) {
-  const safeMessage = escapeHtml(message).replaceAll("\n", "<br>");
-
   return {
-    html: emailShell(
-      `New website enquiry from ${name}.`,
-      `<p style="margin:0 0 20px;color:#ede9df;font-family:Georgia,serif;font-size:24px;line-height:1.35;">New website enquiry</p>
-       <p style="margin:0 0 8px;"><strong style="color:#ede9df;">From:</strong> ${escapeHtml(name)}</p>
-       <p style="margin:0 0 8px;"><strong style="color:#ede9df;">Email:</strong> <a href="mailto:${escapeHtml(email)}" style="color:#d9845f;">${escapeHtml(email)}</a></p>
-       ${artworkTitle ? `<p style="margin:0 0 20px;"><strong style="color:#ede9df;">Artwork:</strong> ${escapeHtml(artworkTitle)}</p>` : ""}
-       <div style="margin:22px 0 0;padding:18px;background:#111516;border-left:3px solid #d9845f;color:#ede9df;">${safeMessage}</div>
-       <p style="margin:22px 0 0;font-size:13px;color:#969c9d;">Reply to this email to respond directly to the sender. The enquiry is also saved in the private Studio dashboard.</p>`
-    ),
     text: [
       "New website enquiry",
       "",
