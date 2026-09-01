@@ -32,6 +32,11 @@ export function Footer() {
           <ul className="space-y-2 text-paper/80">
             <li><Link href="/gallery" className="link-underline">Gallery</Link></li>
             <li><Link href="/about" className="link-underline">About the artist</Link></li>
+            <li>
+              <a href="/Anugrah-Mishra-Artist-CV.pdf" download className="link-underline">
+                Download CV
+              </a>
+            </li>
             <li><Link href="/journal" className="link-underline">Journal &amp; press</Link></li>
             <li><Link href="/contact" className="link-underline">Contact</Link></li>
           </ul>

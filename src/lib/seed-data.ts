@@ -281,8 +281,15 @@ export const bio = {
   ],
 };
 
+export const refugeeSeriesStatement = [
+  "My painting practice explores the inner life of displacement — how political rupture becomes psychological experience. Working at large scale and through layered, gestural surfaces, I use symbolism and archetypal imagery to make visible what is often unspoken: grief, survival, fractured identity, and the quiet endurance of the body under pressure.",
+  "The refugee crisis sits at the centre of my current work. Rather than illustrating events, I build emotional landscapes where figures carry memory, loss, and resilience through colour, texture, and recurring motifs. I am drawn to the point where personal history meets collective reality — where a single face or posture can hold the weight of a wider humanitarian condition.",
+  "Painting, for me, is both excavation and offering: a way to invite empathy without simplifying complexity. Each canvas becomes a site of dialogue, asking viewers to look longer, feel more carefully, and recognise the shared humanity that persists even in exile.",
+];
+
 export const mural = {
   title: "The Human Current",
+  year: "2025",
   location: "Jesus Green Lido, Cambridge",
   commissioner: "Cambridge City Council",
   size: "120 square metres",
@@ -290,7 +297,60 @@ export const mural = {
     "Painted across wooden fencing and curved architectural surfaces along the lido's path, The Human Current responds to the site's relationship with water, movement and communal life. Abstracted human figures move through layered bands of blue and green, referencing both the River Cam and the experience of outdoor swimming — simplified figures acting as shared symbols of motion, wellbeing and collective presence rather than individual portraits. The commission began with Jesus Green Lido assistant manager Annabel Wright, who was looking for a positive response to persistent graffiti on the pathway walls, and, after researching artists, connected with Anugrah — who had studied at Anglia Ruskin University nearby.",
   quote:
     "The work is designed to be encountered in passing by walkers, cyclists and swimmers, unfolding gradually along the length of the site.",
+  images: [
+    {
+      src: "/mural/the-human-current-lido-sign.webp",
+      alt: "The Human Current mural with the Jesus Green Lido name and a swimmer moving through blue currents",
+    },
+    {
+      src: "/mural/the-human-current-pool-panel.webp",
+      alt: "Painted pool scene with yellow swimmers at Jesus Green Lido",
+    },
+    {
+      src: "/mural/the-human-current-swimmer-detail.webp",
+      alt: "Close view of a green swimmer moving through layered blue currents",
+    },
+    {
+      src: "/mural/the-human-current-building-wrap.webp",
+      alt: "The Human Current flowing around the lido building",
+    },
+    {
+      src: "/mural/the-human-current-pool-view.webp",
+      alt: "Pool section of The Human Current seen along the Jesus Green Lido path",
+    },
+    {
+      src: "/mural/the-human-current-round-wall.webp",
+      alt: "Curved end wall painted with a figure rising through blue and green waves",
+    },
+  ],
 };
+
+export const upcomingProjects = [
+  {
+    date: "11–24 September 2026",
+    title: "AA2A Exhibition",
+    location: "Ruskin Gallery · Cambridge",
+    status: "Upcoming",
+    description:
+      "A group exhibition marking the culmination of the AA2A Artist Residency at Cambridge School of Art, bringing together new work from the 2025–26 programme.",
+  },
+  {
+    date: "2026",
+    title: "Angerstein Flyover Mural",
+    location: "Greenwich · London",
+    status: "In development",
+    description:
+      "A commissioned public artwork under the Angerstein Flyover, tracing a visual current from historic East Greenwich to the contemporary Peninsula.",
+  },
+  {
+    date: "Dates to be announced",
+    title: "Solo Exhibition",
+    location: "London",
+    status: "In development",
+    description:
+      "A solo presentation of the Refugee Crisis Series and new paintings examining displacement, memory and psychological space.",
+  },
+];
 
 export const press = [
   {

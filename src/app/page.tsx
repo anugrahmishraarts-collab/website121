@@ -1,13 +1,13 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { HeroCurrent } from "@/components/hero-current";
 import { Reveal } from "@/components/reveal";
 import { ArtworkCard } from "@/components/artwork-card";
-import { ArtworkPlaceholder } from "@/components/artwork-placeholder";
 import { KineticHeadline } from "@/components/kinetic-headline";
 import { PageTransition } from "@/components/page-transition";
 import { getFeaturedArtworks, getPressFeatures } from "@/lib/data";
-import { mural, bio } from "@/lib/seed-data";
+import { mural, bio, upcomingProjects } from "@/lib/seed-data";
 
 export default async function Home() {
   const [featured, press] = await Promise.all([getFeaturedArtworks(), getPressFeatures()]);
@@ -80,8 +80,14 @@ export default async function Home() {
       <section className="border-t border-line">
         <div className="container-gallery py-24 md:py-32 grid lg:grid-cols-[0.85fr_1.15fr] gap-14 lg:gap-24 items-center">
           <Reveal>
-            <div className="relative aspect-[4/5] max-w-md mx-auto lg:mx-0 border border-line">
-              <ArtworkPlaceholder title="Anugrah Mishra, studio portrait" tone="slate" />
+            <div className="relative aspect-[4/5] max-w-md mx-auto lg:mx-0 border border-line overflow-hidden bg-ink-raised">
+              <Image
+                src="/images/anugrah-mishra-artist.webp"
+                alt="Anugrah Mishra standing in front of a painting from the Refugee Crisis Series"
+                fill
+                sizes="(max-width: 1024px) 100vw, 38vw"
+                className="object-cover object-[35%_center]"
+              />
             </div>
           </Reveal>
           <div className="current-line pl-8 md:pl-12">
@@ -139,10 +145,65 @@ export default async function Home() {
             </Reveal>
           </div>
           <Reveal delay={0.1}>
-            <div className="relative aspect-[4/3] border border-line">
-              <ArtworkPlaceholder title="The Human Current mural" tone="ember" />
+            <div className="relative aspect-[3/2] border border-line overflow-hidden bg-ink">
+              <Image
+                src="/mural/the-human-current-lido-sign.webp"
+                alt="The Human Current mural at Jesus Green Lido in Cambridge"
+                fill
+                sizes="(max-width: 1024px) 100vw, 45vw"
+                className="object-cover"
+              />
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      {/* Upcoming projects and exhibitions */}
+      <section id="upcoming" aria-labelledby="upcoming-heading" className="border-t border-line scroll-mt-24">
+        <div className="container-gallery py-24 md:py-32">
+          <Reveal>
+            <div className="grid lg:grid-cols-[0.75fr_1.25fr] gap-6 lg:gap-20 items-end mb-14">
+              <div>
+                <p className="eyebrow mb-4">What&rsquo;s Next</p>
+                <h2 id="upcoming-heading" className="font-display text-3xl md:text-5xl text-paper text-balance">
+                  Upcoming projects &amp; exhibitions
+                </h2>
+              </div>
+              <p className="font-body text-base md:text-lg text-paper/70 leading-relaxed max-w-2xl">
+                Forthcoming exhibitions and public commissions currently moving from studio
+                development into public view.
+              </p>
+            </div>
+          </Reveal>
+
+          <div className="grid md:grid-cols-3 gap-px bg-line border border-line">
+            {upcomingProjects.map((project, index) => (
+              <Reveal key={project.title} delay={index * 0.07} className="h-full">
+                <article className="bg-ink h-full p-7 md:p-8 flex flex-col min-h-80 lift-card">
+                  <div className="flex items-start justify-between gap-4">
+                    <p className="font-ui text-xs tracking-[0.12em] uppercase text-ember-bright leading-relaxed">
+                      {project.status}
+                    </p>
+                    <span className="font-display text-3xl text-paper/20" aria-hidden="true">
+                      0{index + 1}
+                    </span>
+                  </div>
+                  <div className="mt-auto pt-12">
+                    <p className="font-ui text-xs tracking-wide uppercase text-muted mb-3">
+                      {project.date}
+                    </p>
+                    <h3 className="font-display text-2xl text-paper leading-tight">
+                      {project.title}
+                    </h3>
+                    <p className="font-ui text-xs text-slate-bright mt-2">{project.location}</p>
+                    <p className="font-body text-base text-paper/68 leading-relaxed mt-5">
+                      {project.description}
+                    </p>
+                  </div>
+                </article>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 

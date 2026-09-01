@@ -3,6 +3,7 @@ import { Reveal } from "@/components/reveal";
 import { GalleryGrid } from "@/components/gallery-grid";
 import { PageTransition } from "@/components/page-transition";
 import { getPublicArtworks } from "@/lib/data";
+import { refugeeSeriesStatement } from "@/lib/seed-data";
 
 export const metadata: Metadata = {
   title: "Gallery",
@@ -50,6 +51,28 @@ export default async function GalleryPage() {
               interiors, archetypal figures and stillness.
             </p>
           </Reveal>
+
+          <Reveal>
+            <div className="grid lg:grid-cols-[0.65fr_1.35fr] gap-8 lg:gap-16 border-y border-line py-10 md:py-12 mb-16">
+              <div>
+                <p className="eyebrow mb-3">Artist Statement</p>
+                <p className="font-display text-2xl md:text-3xl text-paper max-w-sm text-balance">
+                  The inner life of displacement
+                </p>
+              </div>
+              <div className="space-y-5 current-line pl-7 md:pl-10">
+                {refugeeSeriesStatement.map((paragraph) => (
+                  <p
+                    key={paragraph}
+                    className="font-body text-base md:text-lg text-paper/78 leading-relaxed"
+                  >
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+
           <GalleryGrid artworks={refugeeSeries} />
         </section>
 
