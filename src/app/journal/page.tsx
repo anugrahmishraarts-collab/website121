@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
-import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, ArrowUpRight, Download } from "lucide-react";
 import { Reveal } from "@/components/reveal";
 import { PageTransition } from "@/components/page-transition";
 import { getPressFeatures } from "@/lib/data";
+import { bio } from "@/lib/seed-data";
 
 export const metadata: Metadata = {
   title: "Journal",
-  description: "Press, interviews and features on Anugrah Mishra's work.",
+  description: "Critical reviews, interviews, media coverage and artist biography for Anugrah Mishra.",
 };
 
 export default async function JournalPage() {
@@ -57,6 +59,41 @@ export default async function JournalPage() {
           </Reveal>
         ))}
       </ul>
+
+      <section className="border-t border-line mt-24 pt-20 grid lg:grid-cols-[0.7fr_1.3fr] gap-8 lg:gap-20">
+        <Reveal>
+          <div>
+            <p className="eyebrow mb-4">Artist Bio</p>
+            <h2 className="font-display text-3xl md:text-4xl text-paper text-balance">
+              About Anugrah Mishra
+            </h2>
+          </div>
+        </Reveal>
+        <div className="current-line pl-8 md:pl-12">
+          <Reveal delay={0.05}>
+            <p className="font-body text-lg md:text-xl text-paper/80 leading-relaxed">
+              {bio.short}
+            </p>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div className="flex flex-wrap gap-x-8 gap-y-4 mt-8">
+              <Link
+                href="/about"
+                className="font-ui text-sm text-paper inline-flex items-center gap-2 hover:text-ember-bright transition-colors"
+              >
+                Full biography <ArrowRight size={16} />
+              </Link>
+              <a
+                href="/Anugrah-Mishra-Artist-CV.pdf"
+                download
+                className="font-ui text-sm text-paper inline-flex items-center gap-2 hover:text-ember-bright transition-colors"
+              >
+                Download artist CV <Download size={16} />
+              </a>
+            </div>
+          </Reveal>
+        </div>
+      </section>
     </div>
     </PageTransition>
   );

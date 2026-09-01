@@ -249,6 +249,8 @@ export const artworks: Artwork[] = [
 export const bio = {
   name: "Anugrah Mishra",
   location: "London, United Kingdom",
+  short:
+    "Anugrah Mishra (b. 1999, Lucknow, India) is an Indian contemporary painter and public artist based in London. A First Class Fine Art graduate of Cambridge School of Art, he won the Freelands Painting Prize 2024 and was longlisted for VAA Artist of the Year 2025. His practice explores displacement, memory and psychological space through layered painting and public art. Recent projects include the AA2A Artist Residency 2025–26, The Human Current at Jesus Green Lido, and the commissioned Angerstein Flyover mural in Greenwich.",
   statement:
     "Anugrah Mishra is a London-based contemporary painter whose work explores migration, displacement and the psychological realities of people affected by conflict, exile and forced movement. Rather than document the refugee crisis, his paintings approach it through a psychological lens — recurring motifs of interiors, liminal spaces, abandoned rooms and birds function as metaphors for memory and fractured identity, drawing on atmosphere, silence, domestic objects and archetypal references from psychoanalysis, the Ramayana and the Mahabharata.",
   quote:
@@ -353,6 +355,27 @@ export const upcomingProjects = [
 ];
 
 export const press = [
+  {
+    title: "Between Memory and Myth: The Inner Worlds of Anugrah Mishra’s Paintings",
+    publication: "Gallery Online",
+    url: "https://onlineartgallery.ir/en/articles/between-memory-and-myth-the-inner-worlds-of-anugrah-mishras-paintings/",
+    excerpt:
+      "A critical review by Dr. Fatemeh Abdollahzadeh tracing the psychological, symbolic and mythological language across the Refugee Crisis Series and The Human Current.",
+  },
+  {
+    title: "Cambridge lido fences decorated in mural in bid to deter graffiti",
+    publication: "BBC News",
+    url: "https://www.bbc.co.uk/news/articles/cjdjkr3vmpno",
+    excerpt:
+      "BBC News coverage of The Human Current, the 120 square-metre public mural created for Jesus Green Lido in Cambridge.",
+  },
+  {
+    title: "Featured Artist — Issue 38",
+    publication: "Artist Talk Magazine",
+    url: "https://www.artisttalkmagazine.com/issue-38",
+    excerpt:
+      "An artist spotlight in the July 2025 issue, featuring paintings from the Refugee Crisis Series and an account of the ideas behind the work.",
+  },
   {
     title: "Anugrah Mishra: Between Stillness and Survival",
     publication: "AATONAU",

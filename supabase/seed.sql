@@ -82,27 +82,39 @@ on conflict (slug) do update set
 
 insert into public.press_features (title, publication, url, excerpt, sort_order)
 values
+  ('Between Memory and Myth: The Inner Worlds of Anugrah Mishra''s Paintings', 'Gallery Online',
+   'https://onlineartgallery.ir/en/articles/between-memory-and-myth-the-inner-worlds-of-anugrah-mishras-paintings/',
+   'A critical review by Dr. Fatemeh Abdollahzadeh tracing the psychological, symbolic and mythological language across the Refugee Crisis Series and The Human Current.', 0),
+
+  ('Cambridge lido fences decorated in mural in bid to deter graffiti', 'BBC News',
+   'https://www.bbc.co.uk/news/articles/cjdjkr3vmpno',
+   'BBC News coverage of The Human Current, the 120 square-metre public mural created for Jesus Green Lido in Cambridge.', 1),
+
+  ('Featured Artist — Issue 38', 'Artist Talk Magazine',
+   'https://www.artisttalkmagazine.com/issue-38',
+   'An artist spotlight in the July 2025 issue, featuring paintings from the Refugee Crisis Series and an account of the ideas behind the work.', 2),
+
   ('Anugrah Mishra: Between Stillness and Survival', 'AATONAU',
    'https://aatonau.com/anugrah-mishra-between-stillness-and-survival/',
-   'An in-depth interview on painting the refugee crisis through stillness rather than spectacle, and the mentors and training behind the work.', 0),
+   'An in-depth interview on painting the refugee crisis through stillness rather than spectacle, and the mentors and training behind the work.', 3),
 
   ('Artist completes 120 square metre mural at Jesus Green Lido', 'Cambridge Independent',
    'https://www.cambridgeindependent.co.uk/news/artist-completes-120-square-metre-mural-at-jesus-green-lido-9447429/',
-   'Coverage of "The Human Current," commissioned by Cambridge City Council to transform a graffiti-prone pathway into a public artwork.', 1),
+   'Coverage of "The Human Current," commissioned by Cambridge City Council to transform a graffiti-prone pathway into a public artwork.', 4),
 
   ('New mural at Jesus Green Lido celebrates Cambridge''s connection to water', 'Cambridge City Council',
    'https://cambridge.gov.uk/news/2025/12/30/new-mural-at-jesus-green-lido-celebrates-cambridges-connection-to-water',
-   'The council''s own announcement of the completed commission.', 2),
+   'The council''s own announcement of the completed commission.', 5),
 
   ('Freelands Painting Prize 2024', 'Freelands Foundation',
    'https://www.artrabbit.com/events/freelands-painting-prize-2024',
-   'Exhibition listing for the 2024 prize, awarded annually to an outstanding undergraduate painter nominated by their institution.', 3),
+   'Exhibition listing for the 2024 prize, awarded annually to an outstanding undergraduate painter nominated by their institution.', 6),
 
   ('Anugrah Mishra — Digital Showcase', 'Anglia Ruskin Creative Showcase',
    'https://creativeshowcase.aru.ac.uk/showcase/digitalshowcase/2024/anugrah-mishra',
-   'Graduate showcase profile from Cambridge School of Art.', 4),
+   'Graduate showcase profile from Cambridge School of Art.', 7),
 
   ('Anugrah Mishra — Artist Profile', 'Saatchi Art',
    'https://www.saatchiart.com/anugrahmishra',
-   'Artist profile and available works.', 5)
+   'Artist profile and available works.', 8)
 on conflict do nothing;
