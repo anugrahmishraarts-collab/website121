@@ -5,6 +5,7 @@ import { HeroCurrent } from "@/components/hero-current";
 import { Reveal } from "@/components/reveal";
 import { ArtworkCard } from "@/components/artwork-card";
 import { KineticHeadline } from "@/components/kinetic-headline";
+import { MissionSection } from "@/components/mission-section";
 import { PageTransition } from "@/components/page-transition";
 import { getFeaturedArtworks, getPressFeatures } from "@/lib/data";
 import { mural, bio, upcomingProjects } from "@/lib/seed-data";
@@ -112,6 +113,8 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      <MissionSection />
 
       {/* Mural feature */}
       <section className="border-t border-line bg-ink-raised/40">
